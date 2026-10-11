@@ -299,3 +299,112 @@ tbody tr.is-selected th button { color: var(--lift-side); font-weight: 700; }
   .masthead h1 { flex-wrap: wrap; justify-content: center; }
   .age-row { grid-template-columns: 56px 1fr; }
 }
+
+/* ---------- 政見 ---------- */
+.policies { margin-top: 64px; }
+.policies-head { text-align: center; margin-bottom: 8px; }
+.policies-head h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(28px, 4.5vw, 40px);
+  letter-spacing: 0.14em;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.policies-ring {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr);
+  grid-template-areas:
+    'p1 portrait p2'
+    'p1 portrait p2'
+    '.  p3       .';
+  align-items: center;
+  column-gap: 8px;
+}
+
+.portrait { grid-area: portrait; position: relative; margin: 0; }
+.portrait img { position: relative; display: block; width: 100%; height: auto; }
+.portrait-disc {
+  position: absolute;
+  inset: 8% 6% 4%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 40%, #fffdf6 0%, #f1e8d2 62%, #e7dbbd 100%);
+  box-shadow: 0 0 0 10px rgba(255, 253, 246, 0.6), 0 0 0 11px var(--rule);
+}
+
+.policy {
+  --tone: var(--age-work);
+  position: relative;
+  z-index: 1;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-top: 4px solid var(--tone);
+  border-radius: var(--radius);
+  padding: 18px 20px 16px;
+  box-shadow: 0 1px 0 #fff inset, 0 14px 30px -18px rgba(80, 60, 20, 0.45);
+}
+.tone-old { --tone: var(--age-old); }
+.tone-young { --tone: var(--age-young); }
+.tone-work { --tone: var(--age-work); }
+.policy-1 { grid-area: p1; margin-right: -36px; transform: rotate(-1.5deg); }
+.policy-2 { grid-area: p2; margin-left: -36px; transform: rotate(1.5deg); }
+.policy-3 { grid-area: p3; margin-top: -72px; }
+
+.policy-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.policy-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  color: var(--tone);
+  background: color-mix(in srgb, var(--tone) 12%, transparent);
+}
+.policy-icon svg { width: 24px; height: 24px; }
+.policy-num {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 28px;
+  color: color-mix(in srgb, var(--tone) 35%, transparent);
+}
+.policy h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 22px;
+  letter-spacing: 0.06em;
+}
+.policy-summary { margin: 6px 0 10px; font-size: 14px; color: var(--ink-2); }
+.policy ul { margin: 0; padding: 0; list-style: none; }
+.policy li {
+  position: relative;
+  padding: 5px 0 5px 18px;
+  font-size: 14px;
+  border-top: 1px dashed var(--rule);
+}
+.policy li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--tone);
+  transform: translateY(-50%);
+}
+
+@media (max-width: 900px) {
+  .policies { margin-top: 44px; }
+  .policies-ring {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'portrait' 'p1' 'p2' 'p3';
+    row-gap: 14px;
+  }
+  .portrait { width: min(340px, 86%); justify-self: center; margin-bottom: -40px; }
+  .policy-1, .policy-2, .policy-3 { margin: 0; transform: none; }
+}

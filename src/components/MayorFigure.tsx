@@ -12,6 +12,7 @@ const VEST = '#e8dcbf'
 const VEST_LINE = '#c9b993'
 const NAVY = '#2d3552'
 const INK = '#2a2721'
+const PARTY_GREEN = '#1b8a3e'
 
 function Arm({ side }: { side: 'l' | 'r' }) {
   // 以左臂畫好，右臂鏡射
@@ -44,9 +45,18 @@ export function MayorFigure() {
         <path d="M46 90 L60 111 L74 90" fill="none" stroke={NAVY} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
         <path d="M60 111 V146" stroke={NAVY} strokeWidth="1.6" />
         <rect x="58.6" y="114" width="2.8" height="6" rx="1.2" fill="#9aa3b5" />
-        {/* 胸章（通用綠色圓章） */}
-        <circle cx="73" cy="121" r="5.4" fill="#fff" stroke="#3f9a4a" strokeWidth="2" />
-        <path d="M73 117.6 C75.6 119.6 75.4 123 73 124.6 C70.6 123 70.4 119.6 73 117.6 Z" fill="#3f9a4a" />
+        {/* 黨徽胸章（簡化版：綠底白十字，中央綠色台灣） */}
+        <clipPath id="m-badge-clip">
+          <circle cx="73" cy="121" r="6.2" />
+        </clipPath>
+        <g clipPath="url(#m-badge-clip)">
+          <rect x="66" y="114" width="14" height="14" fill={PARTY_GREEN} />
+          <path d="M71.6 114 h2.8 v14 h-2.8 Z M66 119.6 h14 v2.8 h-14 Z" fill="#fff" />
+          <circle cx="73" cy="121" r="3.1" fill="#fff" />
+          <path d="M73.9 118.2 C74.9 118.9 74.7 120.6 74.1 121.9 C73.6 123.1 72.8 124 72.2 123.6 C71.7 123.2 72 121.6 72.4 120.3 C72.8 119 73.2 117.8 73.9 118.2 Z" fill={PARTY_GREEN} />
+        </g>
+        <circle cx="73" cy="121" r="6.2" fill="none" stroke="#fff" strokeWidth="1" />
+        <circle cx="73" cy="121" r="6.9" fill="none" stroke={PARTY_GREEN} strokeWidth="0.8" />
       </g>
 
       <g className="m-head">

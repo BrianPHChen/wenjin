@@ -1,0 +1,36 @@
+// ⚠️ 政見細項為示意文字，請以候選人正式政見取代。
+// tone 對應頁面色彩：old = 老年（與年齡結構圖同色）、young = 幼年、work = 青壯
+
+export interface Policy {
+  title: string
+  summary: string
+  points: string[]
+  tone: 'old' | 'young' | 'work'
+  icon: 'elder' | 'family' | 'finance'
+}
+
+export const POLICIES_PLACEHOLDER = true
+
+export const policies: Policy[] = [
+  {
+    title: '銀髮族敬老福利',
+    summary: '讓長輩在熟悉的村裡安心終老。',
+    points: ['擴大社區關懷據點與共餐', '長者就醫交通接送', '提高重陽敬老禮金'],
+    tone: 'old',
+    icon: 'elder',
+  },
+  {
+    title: '友善育兒支持',
+    summary: '讓年輕家庭願意留在壯圍、回到壯圍。',
+    points: ['增設公共托育名額', '新生兒育兒津貼', '親子共融公園與遊戲場'],
+    tone: 'young',
+    icon: 'family',
+  },
+  {
+    title: '穩健財源規劃',
+    summary: '每一分錢都用在刀口上，施政才能長久。',
+    points: ['預算公開透明', '爭取中央與縣府補助', '活化閒置公有地增加收入'],
+    tone: 'work',
+    icon: 'finance',
+  },
+]

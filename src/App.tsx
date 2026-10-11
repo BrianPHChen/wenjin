@@ -7,6 +7,7 @@ import { StatCard } from './components/StatCard'
 import { VillageMap } from './components/VillageMap'
 import { VillageTable } from './components/VillageTable'
 import { Mascot } from './components/Mascot'
+import { Policies } from './components/Policies'
 
 const share = (n: number, d: number) => `佔全鄉 ${((n / d) * 100).toFixed(1)}%`
 const vsTownship = (n: number, digits = 1) => `全鄉 ${n.toFixed(digits)}`
@@ -90,6 +91,8 @@ export default function App() {
       </main>
 
       <VillageTable selected={selected} hovered={hovered} onSelect={setSelected} onHover={setHovered} />
+
+      <Policies />
 
       <footer className="colophon">
         村里界：內政部國土測繪中心 村里界圖（TWD97，114 年版）
