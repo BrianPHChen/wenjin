@@ -41,7 +41,7 @@ body {
 }
 
 .page {
-  max-width: 1240px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 40px 24px 56px;
 }
@@ -80,14 +80,11 @@ body {
 .ring {
   display: grid;
   gap: 16px;
-  grid-template-columns: minmax(170px, 1fr) minmax(0, 2.4fr) minmax(170px, 1fr);
+  grid-template-columns: minmax(300px, 1.05fr) minmax(0, 1.6fr) minmax(320px, 1.1fr);
   grid-template-areas:
-    'title   title  title'
-    'pop     map    male'
-    'hh      map    female'
-    'hsize   map    sex'
-    'density map    aging'
-    'age     age    age';
+    'title title board'
+    'stats map   board'
+    'age   age   board';
 }
 .ring-title { grid-area: title; text-align: center; }
 .ring-title h2 {
@@ -97,14 +94,15 @@ body {
   letter-spacing: 0.15em;
 }
 .ring-title p { margin: 4px 0 0; color: var(--ink-3); font-size: 14px; }
-.c-pop { grid-area: pop; }
-.c-hh { grid-area: hh; }
-.c-hsize { grid-area: hsize; }
-.c-density { grid-area: density; }
-.c-male { grid-area: male; }
-.c-female { grid-area: female; }
-.c-sex { grid-area: sex; }
-.c-aging { grid-area: aging; }
+.stats-grid {
+  grid-area: stats;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  align-content: center;
+}
+.stats-grid .card { padding: 14px 16px; }
+.stats-grid .stat-value { font-size: clamp(22px, 2vw, 28px); }
 .map-wrap { grid-area: map; display: flex; align-items: center; justify-content: center; min-height: 0; }
 .age { grid-area: age; }
 
@@ -279,20 +277,25 @@ tbody tr.is-selected th button { color: var(--lift-side); font-weight: 700; }
 .colophon { margin-top: 28px; text-align: center; font-size: 12px; color: var(--ink-3); }
 
 /* ---------- 響應式 ---------- */
+@media (max-width: 1180px) {
+  .ring {
+    grid-template-columns: minmax(280px, 1fr) minmax(0, 1.4fr);
+    grid-template-areas:
+      'title title'
+      'stats map'
+      'age   age'
+      'board board';
+  }
+}
+
 @media (max-width: 900px) {
   .page { padding: 28px 16px 40px; }
   .ring {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-areas:
-      'title   title'
-      'map     map'
-      'pop     hh'
-      'hsize   density'
-      'male    female'
-      'sex     aging'
-      'age     age';
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'title' 'map' 'stats' 'age' 'board';
     gap: 12px;
   }
+
   .village-map { max-height: none; }
   .legend { padding-left: 0; }
   .card { padding: 14px; }
@@ -407,4 +410,131 @@ tbody tr.is-selected th button { color: var(--lift-side); font-weight: 700; }
   }
   .portrait { width: min(340px, 86%); justify-self: center; margin-bottom: -40px; }
   .policy-1, .policy-2, .policy-3 { margin: 0; transform: none; }
+}
+
+/* ---------- 鄉親留言板 ---------- */
+.board {
+  grid-area: board;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 27px, rgba(160, 140, 100, 0.08) 27px 28px),
+    #efe6d0;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: inset 0 2px 10px rgba(110, 85, 40, 0.12);
+  overflow: hidden;
+}
+.board-head { padding: 16px 16px 10px; border-bottom: 1px dashed #d4c6a6; }
+.board-head h3 {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  border: 1px solid #cdbf9e;
+  background: var(--paper-2);
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.chip span { color: var(--ink-3); font-variant-numeric: tabular-nums; margin-left: 2px; }
+.chip:hover:not(:disabled) { background: #fff; }
+.chip.is-on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.chip.is-on span { color: rgba(255, 255, 255, 0.7); }
+.chip:disabled { opacity: 0.4; cursor: default; }
+
+/* height: 0 + flex: 1 讓留言列表不撐高格線列，高度跟著左邊數據與地圖 */
+.board-list {
+  list-style: none;
+  margin: 0;
+  padding: 18px 16px 8px;
+  flex: 1 1 auto;
+  height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.note {
+  position: relative;
+  margin: 0 28px 18px 0;
+  padding: 12px 14px 12px;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  box-shadow: 3px 4px 0 rgba(42, 39, 33, 0.12);
+  animation: note-in 0.3s ease both;
+}
+.note.is-right { margin: 0 0 18px 28px; }
+@keyframes note-in { from { opacity: 0; transform: translateY(6px); } }
+.note p { margin: 8px 0 0; font-size: 14.5px; line-height: 1.65; color: var(--ink); }
+
+.note-tags { display: flex; flex-wrap: wrap; gap: 6px; padding-right: 28px; }
+.tag {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 0;
+  font-family: var(--sans);
+}
+.tag-no { background: #e9a23b; color: #2a2721; font-variant-numeric: tabular-nums; }
+.tag-village { background: var(--ink); color: #fff; cursor: pointer; }
+.tag-village:hover { background: var(--lift-side); }
+.tag-cat { background: var(--age-work); color: #fff; }
+
+.mood {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  display: grid;
+  place-items: center;
+}
+.mood svg { width: 26px; height: 26px; fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; }
+.mood svg circle { fill: var(--ink); stroke: none; }
+.mood-angry { background: #e5533d; }
+.mood-worried { background: #f0a04b; }
+.mood-neutral { background: #b9b4aa; }
+.mood-happy { background: #8cc56a; }
+
+.board-empty { padding: 32px 8px; text-align: center; color: var(--ink-3); font-size: 14px; }
+
+.board-foot { padding: 12px 16px 16px; border-top: 1px dashed #d4c6a6; }
+.cta {
+  display: block;
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  box-shadow: 0 3px 0 #7a321e;
+}
+.cta:hover { filter: brightness(1.06); }
+.cta.is-disabled { background: #cbbf9f; box-shadow: 0 3px 0 #a99b78; color: #fff; cursor: default; }
+
+@media (max-width: 1180px) {
+  .board-list { flex: none; height: 560px; }
+}
+@media (max-width: 900px) {
+  .board-list { height: 520px; }
+  .note, .note.is-right { margin-left: 0; margin-right: 12px; }
 }
