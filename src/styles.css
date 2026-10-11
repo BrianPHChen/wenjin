@@ -1,0 +1,301 @@
+:root {
+  color-scheme: light;
+  --paper: #f5f0e4;
+  --paper-2: #fbf8f1;
+  --ink: #2a2721;
+  --ink-2: #5b554a;
+  --ink-3: #8a8274;
+  --rule: #ddd3bf;
+
+  --land: #dfe7c8;
+  --land-hover: #cfdcae;
+  --land-stroke: #fbf8f1;
+  --socket: #b9b08f;
+  --slab-side: #a99b78;
+  --slab-side-2: #8f8162;
+  --lift-top: #9cc07a;
+  --lift-top-active: #6f9f4c;
+  --lift-side: #557a38;
+  --sea-line: #b8cfd6;
+  --accent: #a4472b;
+
+  --age-young: #5f9444;
+  --age-work: #1f73a3;
+  --age-old: #bb7a2c;
+
+  --serif: 'Noto Serif TC', 'Songti TC', serif;
+  --sans: 'Noto Sans TC', 'PingFang TC', system-ui, sans-serif;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, #fffdf7 0%, transparent 60%),
+    var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 40px 24px 56px;
+}
+
+/* ---------- 標頭 ---------- */
+.masthead { text-align: center; margin-bottom: 28px; }
+.eyebrow {
+  margin: 0 0 6px;
+  letter-spacing: 0.4em;
+  font-size: 13px;
+  color: var(--ink-3);
+}
+.masthead h1 {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(34px, 6vw, 56px);
+  letter-spacing: 0.12em;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.badge {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.lede { margin: 10px 0 0; color: var(--ink-2); font-size: 15px; }
+
+/* ---------- 環繞版面 ---------- */
+.ring {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(170px, 1fr) minmax(0, 2.4fr) minmax(170px, 1fr);
+  grid-template-areas:
+    'title   title  title'
+    'pop     map    male'
+    'hh      map    female'
+    'hsize   map    sex'
+    'density map    aging'
+    'age     age    age';
+}
+.ring-title { grid-area: title; text-align: center; }
+.ring-title h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 30px;
+  letter-spacing: 0.15em;
+}
+.ring-title p { margin: 4px 0 0; color: var(--ink-3); font-size: 14px; }
+.c-pop { grid-area: pop; }
+.c-hh { grid-area: hh; }
+.c-hsize { grid-area: hsize; }
+.c-density { grid-area: density; }
+.c-male { grid-area: male; }
+.c-female { grid-area: female; }
+.c-sex { grid-area: sex; }
+.c-aging { grid-area: aging; }
+.map-wrap { grid-area: map; display: flex; align-items: center; justify-content: center; min-height: 0; }
+.age { grid-area: age; }
+
+.link {
+  margin-left: 12px;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+.link:hover { text-decoration: underline; }
+
+/* ---------- 卡片 ---------- */
+.card {
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: 0 1px 0 #fff inset, 0 6px 18px -12px rgba(80, 60, 20, 0.35);
+}
+.card-label {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-2);
+  letter-spacing: 0.08em;
+}
+.stat { display: flex; flex-direction: column; justify-content: center; }
+.stat-value {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(26px, 2.6vw, 34px);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+}
+.stat-unit { font-family: var(--sans); font-size: 13px; font-weight: 400; color: var(--ink-3); margin-left: 4px; }
+.stat-note { margin: 4px 0 0; font-size: 12.5px; color: var(--ink-3); }
+
+/* ---------- 地圖 ---------- */
+.village-map {
+  width: 100%;
+  max-height: 78vh;
+  overflow: visible;
+  user-select: none;
+}
+.map-deco {
+  font-family: var(--serif);
+  font-size: 18px;
+  letter-spacing: 0.6em;
+  fill: #7d9ea8;
+  writing-mode: vertical-rl;
+}
+.compass path { fill: var(--ink-2); }
+.compass text { font-size: 11px; fill: var(--ink-2); font-weight: 700; }
+
+.slab-shadow { fill: rgba(70, 55, 25, 0.28); }
+.slab-side { fill: var(--slab-side); stroke: var(--slab-side-2); stroke-width: 0.6; }
+
+.village {
+  fill: var(--land);
+  stroke: var(--land-stroke);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  cursor: pointer;
+  outline: none;
+  transition: fill 0.2s;
+}
+.village:hover { fill: var(--land-hover); }
+.village.is-socket { fill: var(--socket); }
+.village:focus-visible { stroke: var(--accent); stroke-width: 2.5; }
+
+.village-label {
+  font-size: 11px;
+  font-weight: 500;
+  fill: var(--ink-2);
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+  paint-order: stroke;
+  stroke: rgba(251, 248, 241, 0.8);
+  stroke-width: 3px;
+}
+.village-label.is-lifted { font-size: 13px; font-weight: 700; fill: #fff; stroke: rgba(40, 60, 20, 0.45); }
+
+.lift-shadow { fill: #3d3418; pointer-events: none; }
+.lift-side { fill: var(--lift-side); stroke: var(--lift-side); stroke-width: 0.6; pointer-events: none; }
+.lift-top {
+  fill: var(--lift-top);
+  stroke: #f4f9ec;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  cursor: pointer;
+}
+.is-active .lift-top { fill: var(--lift-top-active); }
+
+/* ---------- 年齡結構 ---------- */
+.age-row { display: grid; grid-template-columns: 72px 1fr; align-items: center; gap: 12px; margin: 6px 0; }
+.age-row-title { font-size: 13px; color: var(--ink-2); text-align: right; }
+.age-bar { display: flex; gap: 2px; height: 22px; }
+.age-row.is-thin .age-bar { height: 10px; }
+.age-row.is-thin .age-row-title { color: var(--ink-3); font-size: 12px; }
+.age-seg { position: relative; min-width: 4px; transition: flex-grow 0.45s ease, opacity 0.15s; }
+.age-seg:first-child { border-radius: 4px 0 0 4px; }
+.age-seg:last-child { border-radius: 0 4px 4px 0; }
+.age-seg.is-dim { opacity: 0.45; }
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: var(--ink);
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 5;
+}
+.tooltip strong { display: block; font-weight: 500; opacity: 0.8; }
+
+.legend {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0 0 0 84px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+}
+.legend li { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; }
+.legend-label { color: var(--ink-2); }
+.legend-value { color: var(--ink); font-variant-numeric: tabular-nums; }
+.legend-value em { font-style: normal; color: var(--ink-3); margin-left: 6px; }
+
+/* ---------- 一覽表 ---------- */
+.table-card { margin-top: 16px; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 7px 10px; border-bottom: 1px solid var(--rule); text-align: left; }
+thead th { font-weight: 500; font-size: 12.5px; color: var(--ink-3); }
+.num { text-align: right; }
+td.num { position: relative; isolation: isolate; }
+.cell-bar {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  height: 16px;
+  max-width: calc(100% - 20px);
+  transform: translateY(-50%);
+  background: rgba(95, 148, 68, 0.14);
+  border-radius: 3px;
+  z-index: -1;
+}
+tbody tr { cursor: pointer; transition: background 0.15s; }
+tbody tr.is-hovered { background: rgba(207, 220, 174, 0.35); }
+tbody tr.is-selected { background: rgba(111, 159, 76, 0.18); }
+tbody th button {
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0;
+}
+tbody tr.is-selected th button { color: var(--lift-side); font-weight: 700; }
+
+.colophon { margin-top: 28px; text-align: center; font-size: 12px; color: var(--ink-3); }
+
+/* ---------- 響應式 ---------- */
+@media (max-width: 900px) {
+  .page { padding: 28px 16px 40px; }
+  .ring {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      'title   title'
+      'map     map'
+      'pop     hh'
+      'hsize   density'
+      'male    female'
+      'sex     aging'
+      'age     age';
+    gap: 12px;
+  }
+  .village-map { max-height: none; }
+  .legend { padding-left: 0; }
+  .card { padding: 14px; }
+  .masthead h1 { flex-wrap: wrap; justify-content: center; }
+  .age-row { grid-template-columns: 56px 1fr; }
+}
