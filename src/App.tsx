@@ -92,12 +92,12 @@ export default function App() {
 
       <VillageTable selected={selected} hovered={hovered} onSelect={setSelected} onHover={setHovered} />
 
-      <Policies />
-
-      <footer className="colophon">
+      <p className="colophon">
         村里界：內政部國土測繪中心 村里界圖（TWD97，114 年版）
         {IS_PLACEHOLDER && ' · 統計數據為示意用假資料'}
-      </footer>
+      </p>
+
+      <Policies />
 
       <Mascot villageName={village?.name ?? null} />
     </div>
