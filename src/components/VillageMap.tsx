@@ -1,6 +1,7 @@
 import { useMemo, type KeyboardEvent } from 'react'
 import { MAP_HEIGHT, MAP_WIDTH, townshipD, villages, type Village } from '../geo'
 import { useSprings } from '../useSprings'
+import { focusHoverProps, hoverProps } from '../hover'
 
 const SLAB_DEPTH = 9 // 全鄉底座厚度
 const LIFT_SELECTED = 20
@@ -92,10 +93,8 @@ export function VillageMap({ selected, hovered, onSelect, onHover }: Props) {
               toggle(v.code)
             }}
             onKeyDown={(e) => onKey(e, v.code)}
-            onPointerEnter={() => onHover(v.code)}
-            onPointerLeave={() => onHover(null)}
-            onFocus={() => onHover(v.code)}
-            onBlur={() => onHover(null)}
+            {...hoverProps(v.code, onHover)}
+            {...focusHoverProps(v.code, onHover)}
           />
         )
       })}
@@ -162,8 +161,7 @@ function LiftedVillage({
           e.stopPropagation()
           onClick()
         }}
-        onPointerEnter={() => onHover(v.code)}
-        onPointerLeave={() => onHover(null)}
+        {...hoverProps(v.code, onHover)}
       />
       <text x={v.centroid[0]} y={v.centroid[1] - lift} className="village-label is-lifted">
         {v.name.replace('村', '')}

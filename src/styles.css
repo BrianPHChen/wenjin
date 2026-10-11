@@ -173,7 +173,7 @@ body {
   outline: none;
   transition: fill 0.2s;
 }
-.village:hover { fill: var(--land-hover); }
+@media (hover: hover) { .village:hover { fill: var(--land-hover); } }
 .village.is-socket { fill: var(--socket); }
 .village:focus-visible { stroke: var(--accent); stroke-width: 2.5; }
 

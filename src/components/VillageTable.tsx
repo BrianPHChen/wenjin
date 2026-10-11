@@ -1,5 +1,6 @@
 import { villages } from '../geo'
 import { statsFor } from '../stats'
+import { hoverProps } from '../hover'
 
 interface Props {
   selected: string | null
@@ -31,8 +32,7 @@ export function VillageTable({ selected, hovered, onSelect, onHover }: Props) {
                 key={v.code}
                 className={`${v.code === selected ? 'is-selected' : ''}${v.code === hovered ? ' is-hovered' : ''}`}
                 onClick={() => onSelect(v.code === selected ? null : v.code)}
-                onPointerEnter={() => onHover(v.code)}
-                onPointerLeave={() => onHover(null)}
+                {...hoverProps(v.code, onHover)}
               >
                 <th scope="row">
                   <button type="button" aria-pressed={v.code === selected}>{v.name}</button>
