@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "dev:emu": "VITE_EMULATORS=1 vite",
-    "emulators": "npm --prefix functions run build && firebase emulators:start --only auth,firestore,functions"
+    "emulators": "npm --prefix functions run build && firebase emulators:start --only auth,firestore,functions",
+    "setup-hooks": "git config core.hooksPath scripts/git-hooks"
   },
   "dependencies": {
     "@line/liff": "^2.31.2",

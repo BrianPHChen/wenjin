@@ -8,6 +8,18 @@ npm run dev      # 開發
 npm run build    # 產出 dist/，可直接部署到任何靜態主機
 ```
 
+## 部署
+
+網站在 Firebase Hosting（專案 `wenjin-c1557`）。push `main` 時 pre-push hook 會先部署再 push：
+
+```bash
+npx firebase-tools login   # 每台電腦一次
+npm run setup-hooks        # 每個 clone 一次
+git push                   # 自動部署；SKIP_DEPLOY=1 git push 只 push 不部署
+```
+
+有未 commit 的修改時 hook 會擋下 push。Cloud Functions 與 Firestore 規則不會自動部署，改了要手動 `npx firebase-tools deploy --only functions,firestore`。
+
 ## 資料
 
 - `src/data/zhuangwei.json` — 壯圍鄉 16 村界 GeoJSON（由 `../村里界歷史圖資_114/VILLAGE_NLSC_11401031.shp` 擷取）。

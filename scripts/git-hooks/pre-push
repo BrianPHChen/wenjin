@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# push main 到 GitHub 前，先把這個 commit 部署到 Firebase Hosting；部署失敗就擋下 push。
+# 安裝：npm run setup-hooks（設定 core.hooksPath）。只想 push 不部署：SKIP_DEPLOY=1 git push
+set -euo pipefail
+
+ZERO=0000000000000000000000000000000000000000
+deploy_sha=""
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ "$remote_ref" = "refs/heads/main" ] || continue
+  [ "$local_sha" = "$ZERO" ] && continue # 刪除分支
+  # 遠端有本機沒有的 commit：git 會拒絕這次 push，所以不要先部署
+  if [ "$remote_sha" != "$ZERO" ] && ! git merge-base --is-ancestor "$remote_sha" "$local_sha" 2>/dev/null; then
+    echo "✋ GitHub 上有本機沒有的 commit，請先 git pull 再 push。" >&2
+    exit 1
+  fi
+  deploy_sha="$local_sha"
+done
+
+[ -n "$deploy_sha" ] || exit 0
+if [ "${SKIP_DEPLOY:-}" = "1" ]; then
+  echo "⏭  SKIP_DEPLOY=1，略過部署"
+  exit 0
+fi
+
+# 部署的是工作目錄的檔案，所以必須跟要 push 的 commit 完全一致
+if [ "$deploy_sha" != "$(git rev-parse HEAD)" ]; then
+  echo "✋ 要 push 的不是目前所在的 commit，無法確認部署內容。請切到 main 最新的 commit 再 push。" >&2
+  exit 1
+fi
+if [ -n "$(git status --porcelain)" ]; then
+  echo "✋ 有還沒 commit 的修改，先 commit 或還原再 push（避免部署到沒存進 git 的內容）：" >&2
+  git status --short >&2
+  exit 1
+fi
+
+echo "🚀 部署 $(git log -1 --format='%h %s') 到 Firebase Hosting…"
+if ! npx -y firebase-tools@15 deploy --only hosting --non-interactive --message "$(git log -1 --format='%h %s')"; then
+  echo "❌ 部署失敗，已取消 push。修好後再 push 一次。" >&2
+  exit 1
+fi
+echo "✅ 部署完成，繼續 push"

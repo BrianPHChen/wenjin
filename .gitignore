@@ -6,3 +6,6 @@ dist
 # Firebase
 .firebase
 *-debug.log
+
+# 原始素材（太大，不進 git）
+art/
