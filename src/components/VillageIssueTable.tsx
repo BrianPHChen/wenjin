@@ -1,5 +1,5 @@
 import { MOOD_LABEL, MOODS } from '../data/feedback'
-import { maxVillageTotal, villageFeedback } from '../feedbackStats'
+import { useFeedback } from '../feedbackStore'
 import { villages } from '../geo'
 import { hoverProps } from '../hover'
 
@@ -11,6 +11,7 @@ interface Props {
 }
 
 export function VillageIssueTable({ selected, hovered, onSelect, onHover }: Props) {
+  const { villages: villageFeedback, maxVillageTotal } = useFeedback()
   const rows = villages
     .map((v) => ({ v, s: villageFeedback[v.code] }))
     .sort((a, b) => b.s.total - a.s.total)

@@ -1,0 +1,29 @@
+rules_version = '2';
+
+// 前端只能讀，所有寫入都走 Cloud Functions（functions/src/index.ts，用 Admin SDK 不受規則限制）。
+// 管理員 = admins/{uid} 文件存在，請在 Firebase 主控台手動新增。
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    // 審核通過、只含可公開欄位的留言
+    match /publicFeed/{chunk} {
+      allow read: if true;
+    }
+
+    // 完整留言（含帳號 ID、帳號名稱、待審核內容）只有管理員看得到
+    match /feedback/{id} {
+      allow read: if isAdmin();
+    }
+
+    match /users/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+    }
+
+    match /admins/{uid} {
+      allow get: if request.auth != null && request.auth.uid == uid;
+    }
+  }
+}

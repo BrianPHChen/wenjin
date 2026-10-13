@@ -1,0 +1,30 @@
+.admin { max-width: 760px; }
+.admin-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 16px; }
+.admin-head h1 { margin: 0; font-family: var(--serif); font-size: 26px; letter-spacing: 0.06em; }
+.admin-head p { margin: 0; font-size: 14px; color: var(--ink-2); }
+.admin-head a.link { text-decoration: none; }
+
+.admin-login { max-width: 320px; margin: 40px auto; text-align: center; }
+.admin-denied { padding: 16px 18px; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--paper-2); line-height: 1.7; }
+.admin-denied p { margin: 0 0 8px; }
+.admin-uid code { font-size: 15px; padding: 4px 8px; background: #fff; border: 1px solid var(--rule); border-radius: 6px; word-break: break-all; }
+
+.admin-tabs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 14px; }
+.admin-tabs .pick { font-family: inherit; }
+
+.admin-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.admin-item { padding: 14px 16px; background: #fff; border: 1px solid var(--rule); border-radius: 14px; }
+.admin-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.admin-meta .mood { position: static; width: 28px; height: 28px; border-width: 1.5px; }
+.admin-meta .mood svg { width: 22px; height: 22px; }
+.admin-mood { font-size: 13px; color: var(--ink-2); }
+.admin-text { margin: 10px 0 6px; font-size: 16px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+.admin-who { margin: 0 0 10px; font-size: 12.5px; color: var(--ink-3); }
+.admin-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.admin-actions .link { margin: 0; }
+.admin-actions .btn { min-width: 96px; }
+.btn-approve { background: var(--lift-side); color: #fff; }
+.btn-reject { background: #fff; color: #8a2f1b; border: 1px solid #d9b2a6; }
+
+.admin-tools { margin-top: 32px; display: flex; flex-direction: column; gap: 10px; }
+.admin-tools h2 { margin: 0; }

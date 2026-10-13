@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
-import { FEEDBACK_PLACEHOLDER } from './data/feedback'
 import { villages } from './geo'
-import { feedbackFor, townshipFeedback as T } from './feedbackStats'
-import { stepRanges } from './mapScale'
+import { useFeedback } from './feedbackStore'
 import { FeedbackBoard } from './components/FeedbackBoard'
 import { InsightPanel } from './components/InsightPanel'
 import { Mascot } from './components/Mascot'
@@ -18,19 +16,21 @@ export default function App() {
     return villages.some((v) => v.code === code) ? code : null
   })
   const [hovered, setHovered] = useState<string | null>(null)
+  const { township: T, statsFor, scale, hasMock, status } = useFeedback()
 
   useEffect(() => {
     history.replaceState(null, '', selected ? `#${selected}` : location.pathname + location.search)
   }, [selected])
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setSelected(null)
+    // 對話框開著時 Esc 是關對話框
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && !document.querySelector('dialog[open]') && setSelected(null)
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
   const village = villages.find((v) => v.code === selected) ?? null
-  const s = feedbackFor(selected)
+  const s = statsFor(selected)
   const name = village?.name ?? '壯圍鄉'
 
   return (
@@ -39,7 +39,7 @@ export default function App() {
         <p className="eyebrow">宜蘭縣 · 壯圍鄉</p>
         <h1>
           吳XX｜壯圍鄉長候選人
-          {FEEDBACK_PLACEHOLDER && <span className="badge" title="目前建言數據為示意用假資料">示意資料</span>}
+          {hasMock && <span className="badge" title="目前建言數據含示意用假資料">示意資料</span>}
         </h1>
         <p className="lede">點選地圖上的村，左邊建言統計與右邊鄉親留言會切換成該村；再點一次或按 Esc 回到全鄉。</p>
       </header>
@@ -56,7 +56,7 @@ export default function App() {
                 </button>
               </>
             ) : (
-              <>16 村 · {T.total} 則建言</>
+              <>16 村 · {status === 'loading' ? '載入中…' : `${T.total} 則建言`}</>
             )}
           </p>
         </div>
@@ -68,7 +68,7 @@ export default function App() {
           <div className="map-legend">
             <span className="map-legend-title">建言數</span>
             <ol>
-              {stepRanges.map((r, k) => (
+              {scale.stepRanges.map((r, k) => (
                 <li key={k}>
                   <i className={`step-${k}`} />
                   {r}
@@ -88,7 +88,7 @@ export default function App() {
 
       <p className="colophon">
         村里界：內政部國土測繪中心 村里界圖（TWD97，114 年版）
-        {FEEDBACK_PLACEHOLDER && ' · 建言數據為示意用假資料'}
+        {hasMock && ' · 建言數據含示意用假資料'}
       </p>
 
       <Policies />

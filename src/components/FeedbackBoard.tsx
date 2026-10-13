@@ -1,28 +1,22 @@
-import { useMemo, useState } from 'react'
-import { CATEGORIES, feedback, FEEDBACK_FORM_URL, FEEDBACK_PLACEHOLDER, MOOD_LABEL, type Category, type Mood } from '../data/feedback'
+import { lazy, Suspense, useMemo, useState } from 'react'
+import { CATEGORIES, type Category } from '../data/feedback'
+import { useFeedback } from '../feedbackStore'
+import { LINE_PENDING_KEY } from '../firebase'
 import { villages } from '../geo'
+import { MoodFace } from './MoodFace'
+
+// 表單和登入 SDK 等按下「我要反映」才載入
+const FeedbackForm = lazy(() => import('./FeedbackForm'))
+
+const lineLoginPending = () => {
+  try {
+    return !!sessionStorage.getItem(LINE_PENDING_KEY)
+  } catch {
+    return false
+  }
+}
 
 const villageName = Object.fromEntries(villages.map((v) => [v.code, v.name.replace('村', '')]))
-
-function MoodFace({ mood }: { mood: Mood }) {
-  const mouth = {
-    angry: 'M8 16.5 Q12 13.5 16 16.5',
-    worried: 'M8.5 16 Q12 14.5 15.5 16',
-    neutral: 'M8.5 15.5 H15.5',
-    happy: 'M8 14 Q12 18 16 14',
-  }[mood]
-  const label = MOOD_LABEL[mood]
-  return (
-    <span className={`mood mood-${mood}`} role="img" aria-label={label}>
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        {mood === 'angry' && <path d="M6.5 8.5 L10 10 M17.5 8.5 L14 10" />}
-        <circle cx="9" cy="11.5" r="1.1" />
-        <circle cx="15" cy="11.5" r="1.1" />
-        <path d={mouth} />
-      </svg>
-    </span>
-  )
-}
 
 interface Props {
   selected: string | null
@@ -31,8 +25,11 @@ interface Props {
 
 export function FeedbackBoard({ selected, onSelect }: Props) {
   const [category, setCategory] = useState<Category | null>(null)
+  // LINE 登入會整頁跳轉，回來時直接打開表單繼續
+  const [formOpen, setFormOpen] = useState(lineLoginPending)
+  const { items: feedback, status, hasMock } = useFeedback()
 
-  const inVillage = useMemo(() => (selected ? feedback.filter((f) => f.village === selected) : feedback), [selected])
+  const inVillage = useMemo(() => (selected ? feedback.filter((f) => f.village === selected) : feedback), [feedback, selected])
   const counts = useMemo(() => {
     const c = Object.fromEntries(CATEGORIES.map((k) => [k, 0])) as Record<Category, number>
     for (const f of inVillage) c[f.category]++
@@ -46,7 +43,7 @@ export function FeedbackBoard({ selected, onSelect }: Props) {
       <header className="board-head">
         <h3 id="board-title">
           「{where}」的鄉親聲音
-          {FEEDBACK_PLACEHOLDER && <span className="badge">示意留言</span>}
+          {hasMock && <span className="badge">含示意留言</span>}
         </h3>
         <div className="chips" role="group" aria-label="依類別篩選">
           <button type="button" className={`chip${category === null ? ' is-on' : ''}`} aria-pressed={category === null} onClick={() => setCategory(null)}>
@@ -79,9 +76,12 @@ export function FeedbackBoard({ selected, onSelect }: Props) {
               <span className="tag tag-cat">{f.category}</span>
             </div>
             <p>{f.text}</p>
+            <span className="note-name">— {f.name ?? '匿名村民'}{f.mock && '（示意）'}</span>
           </li>
         ))}
-        {shown.length === 0 && (
+        {status === 'loading' && <li className="board-empty">留言載入中…</li>}
+        {status === 'error' && <li className="board-empty">留言載入失敗，請重新整理再試一次</li>}
+        {status === 'ready' && shown.length === 0 && (
           <li className="board-empty">
             還沒有{where}{category ? `「${category}」類` : ''}的留言
             {selected && (
@@ -92,10 +92,11 @@ export function FeedbackBoard({ selected, onSelect }: Props) {
       </ol>
 
       <footer className="board-foot">
-        {FEEDBACK_FORM_URL ? (
-          <a className="cta" href={FEEDBACK_FORM_URL} target="_blank" rel="noreferrer">你也有話想說？我要反映 →</a>
-        ) : (
-          <span className="cta is-disabled" aria-disabled="true">我要反映（即將開放）</span>
+        <button type="button" className="cta" onClick={() => setFormOpen(true)}>你也有話想說？我要反映 →</button>
+        {formOpen && (
+          <Suspense fallback={null}>
+            <FeedbackForm defaultVillage={selected} onClose={() => setFormOpen(false)} />
+          </Suspense>
         )}
       </footer>
     </section>

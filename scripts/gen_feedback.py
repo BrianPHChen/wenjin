@@ -1,4 +1,4 @@
-"""產生 mock 鄉親建言（src/data/feedback.ts）。上線前請改接真實資料。
+"""產生示意鄉親建言（src/data/mockFeedback.ts），由審核頁匯入資料庫。
 用法：python3 scripts/gen_feedback.py"""
 import json, random, re
 
@@ -60,32 +60,8 @@ for code, name, cat, mood, text in rows:
     lines.append(f"  {{ no: {no}, village: '{code}', category: '{cat}', mood: '{mood}', text: '{text}' }}, // {name}")
     no -= random.randint(1, 4)
 
-src = f'''// ⚠️ 全部為 mock 建言（由 scripts/gen_feedback.py 產生），上線前請改接真實資料。
-// village 為 VILLCODE；category「其他」視為支持留言，不列入議題統計。
-
-export const CATEGORIES = ['交通', '環境', '長照', '育兒', '觀光', '文化', '其他'] as const
-export type Category = (typeof CATEGORIES)[number]
-export type Issue = Exclude<Category, '其他'>
-export const ISSUES = CATEGORIES.filter((c): c is Issue => c !== '其他')
-
-export const MOODS = ['angry', 'worried', 'neutral', 'happy'] as const
-export type Mood = (typeof MOODS)[number]
-export const MOOD_LABEL: Record<Mood, string> = {{ angry: '生氣', worried: '擔心', neutral: '普通', happy: '開心' }}
-
-export interface Feedback {{
-  no: number
-  village: string
-  category: Category
-  mood: Mood
-  text: string
-}}
-
-export const FEEDBACK_PLACEHOLDER = true
-/** 「我要反映」表單連結；留空則按鈕顯示即將開放 */
-export const FEEDBACK_FORM_URL = ''
-
-/** 新到舊排序 */
-export const feedback: Feedback[] = [
+src = open('src/data/mockFeedback.ts').read().split('/** 新到舊排序 */')[0] + '''/** 新到舊排序 */
+export const mockFeedback: MockFeedback[] = [
 ''' + '\n'.join(lines) + '\n]\n'
-open('src/data/feedback.ts', 'w').write(src)
+open('src/data/mockFeedback.ts', 'w').write(src)
 print(len(rows), 'entries')

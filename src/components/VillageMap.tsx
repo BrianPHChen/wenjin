@@ -2,8 +2,7 @@ import { useMemo, type KeyboardEvent } from 'react'
 import { MAP_HEIGHT, MAP_WIDTH, townshipD, villages, type Village } from '../geo'
 import { useSprings } from '../useSprings'
 import { focusHoverProps, hoverProps } from '../hover'
-import { villageFeedback } from '../feedbackStats'
-import { countStep } from '../mapScale'
+import { useFeedback } from '../feedbackStore'
 
 const SLAB_DEPTH = 9 // 全鄉底座厚度
 const LIFT_SELECTED = 20
@@ -17,6 +16,7 @@ interface Props {
 }
 
 export function VillageMap({ selected, hovered, onSelect, onHover }: Props) {
+  const { villages: villageFeedback, scale: { countStep } } = useFeedback()
   const targets = useMemo(() => {
     const t: Record<string, number> = {}
     if (hovered && hovered !== selected) t[hovered] = LIFT_HOVER
@@ -171,7 +171,7 @@ function LiftedVillage({
 
 /** 村名＋該村最在意的議題（第二行小字） */
 function VillageLabel({ village: v, y, className }: { village: Village; y: number; className: string }) {
-  const issue = villageFeedback[v.code]?.topIssue
+  const issue = useFeedback().villages[v.code]?.topIssue
   return (
     <text x={v.centroid[0]} y={issue ? y - 5 : y} className={className}>
       {v.name.replace('村', '')}

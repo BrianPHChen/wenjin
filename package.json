@@ -1,15 +1,19 @@
 {
-  "name": "zhuangwei-map",
+  "name": "wenjin",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:emu": "VITE_EMULATORS=1 vite",
+    "emulators": "npm --prefix functions run build && firebase emulators:start --only auth,firestore,functions"
   },
   "dependencies": {
+    "@line/liff": "^2.31.2",
     "d3-geo": "^3.1.1",
+    "firebase": "^12.19.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },

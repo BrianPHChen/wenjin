@@ -1,5 +1,6 @@
-import { feedback, ISSUES, MOODS, type Feedback, type Issue, type Mood } from './data/feedback'
+import { ISSUES, MOODS, type Feedback, type Issue, type Mood } from './data/feedback'
 import { villages } from './geo'
+import { makeScale, type CountScale } from './mapScale'
 
 export interface FeedbackStats {
   total: number
@@ -15,6 +16,7 @@ export interface FeedbackStats {
   moods: Record<Mood, number>
 }
 
+/** list 必須新到舊排序 */
 function summarize(list: Feedback[]): FeedbackStats {
   const issueCount = Object.fromEntries(ISSUES.map((i) => [i, 0])) as Record<Issue, number>
   const concernCount = { ...issueCount }
@@ -53,14 +55,22 @@ function summarize(list: Feedback[]): FeedbackStats {
   }
 }
 
-export const townshipFeedback = summarize(feedback)
-
-export const villageFeedback: Record<string, FeedbackStats> = Object.fromEntries(
-  villages.map((v) => [v.code, summarize(feedback.filter((f) => f.village === v.code))]),
-)
-
-export function feedbackFor(code: string | null): FeedbackStats {
-  return (code && villageFeedback[code]) || townshipFeedback
+export interface FeedbackData {
+  township: FeedbackStats
+  villages: Record<string, FeedbackStats>
+  maxVillageTotal: number
+  scale: CountScale
 }
 
-export const maxVillageTotal = Math.max(...Object.values(villageFeedback).map((s) => s.total))
+export function buildFeedbackData(list: Feedback[]): FeedbackData {
+  const byVillage = Object.fromEntries(
+    villages.map((v) => [v.code, summarize(list.filter((f) => f.village === v.code))]),
+  )
+  const totals = Object.values(byVillage).map((s) => s.total)
+  return {
+    township: summarize(list),
+    villages: byVillage,
+    maxVillageTotal: Math.max(1, ...totals),
+    scale: makeScale(totals),
+  }
+}

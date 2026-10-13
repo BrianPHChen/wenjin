@@ -21,7 +21,7 @@ export function InsightPanel({ stats: s, township: T, isVillage }: Props) {
     <div className="insights">
       <div className="stats-grid">
         <StatCard label="總建言數" value={s.total} unit="則"
-          note={isVillage ? `佔全鄉 ${pct(s.total / T.total)}` : `來自 ${s.villageCount} 個村`} />
+          note={isVillage ? `佔全鄉 ${T.total ? pct(s.total / T.total) : '—'}` : `來自 ${s.villageCount} 個村`} />
         <StatCard label="支持留言" value={s.support} unit="則"
           note={s.total ? `佔 ${pct(s.support / s.total)}` : '—'} />
         <TextStat label="最多關注議題" value={s.topIssue ?? '—'}
