@@ -2,6 +2,8 @@ import { useMemo, type KeyboardEvent } from 'react'
 import { MAP_HEIGHT, MAP_WIDTH, townshipD, villages, type Village } from '../geo'
 import { useSprings } from '../useSprings'
 import { focusHoverProps, hoverProps } from '../hover'
+import { villageFeedback } from '../feedbackStats'
+import { countStep } from '../mapScale'
 
 const SLAB_DEPTH = 9 // 全鄉底座厚度
 const LIFT_SELECTED = 20
@@ -83,7 +85,7 @@ export function VillageMap({ selected, hovered, onSelect, onHover }: Props) {
           <path
             key={v.code}
             d={v.d}
-            className={`village${lift > 0.05 ? ' is-socket' : ''}`}
+            className={`village step-${countStep(villageFeedback[v.code].total)}${lift > 0.05 ? ' is-socket' : ''}`}
             tabIndex={0}
             role="button"
             aria-pressed={v.code === selected}
@@ -103,9 +105,8 @@ export function VillageMap({ selected, hovered, onSelect, onHover }: Props) {
       <g className="labels" aria-hidden="true">
         {villages.map((v) =>
           (lifts[v.code] ?? 0) > 0.05 ? null : (
-            <text key={v.code} x={v.centroid[0]} y={v.centroid[1]} className="village-label">
-              {v.name.replace('村', '')}
-            </text>
+            <VillageLabel key={v.code} village={v} y={v.centroid[1]}
+              className={`village-label${countStep(villageFeedback[v.code].total) >= 3 ? ' on-dark' : ''}`} />
           ),
         )}
       </g>
@@ -163,9 +164,22 @@ function LiftedVillage({
         }}
         {...hoverProps(v.code, onHover)}
       />
-      <text x={v.centroid[0]} y={v.centroid[1] - lift} className="village-label is-lifted">
-        {v.name.replace('村', '')}
-      </text>
+      <VillageLabel village={v} y={v.centroid[1] - lift} className="village-label is-lifted" />
     </g>
+  )
+}
+
+/** 村名＋該村最在意的議題（第二行小字） */
+function VillageLabel({ village: v, y, className }: { village: Village; y: number; className: string }) {
+  const issue = villageFeedback[v.code]?.topIssue
+  return (
+    <text x={v.centroid[0]} y={issue ? y - 5 : y} className={className}>
+      {v.name.replace('村', '')}
+      {issue && (
+        <tspan x={v.centroid[0]} dy="13" className="village-issue">
+          {issue}
+        </tspan>
+      )}
+    </text>
   )
 }

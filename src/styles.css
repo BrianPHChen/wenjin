@@ -23,6 +23,19 @@
   --age-work: #1f73a3;
   --age-old: #bb7a2c;
 
+  /* 情緒：發散色階（負面兩階紅、中性灰、正面綠），搭配表情與文字標示 */
+  --mood-angry: #c8442f;
+  --mood-worried: #e59a82;
+  --mood-neutral: #bdb7ab;
+  --mood-happy: #5f9444;
+
+  /* 地圖建言數：循序色階（淺→深綠） */
+  --step-0: #eef2dc;
+  --step-1: #d6e4b4;
+  --step-2: #b5d08a;
+  --step-3: #86b05e;
+  --step-4: #5a8a3f;
+
   --serif: 'Noto Serif TC', 'Songti TC', serif;
   --sans: 'Noto Sans TC', 'PingFang TC', system-ui, sans-serif;
   --radius: 14px;
@@ -94,8 +107,8 @@ body {
   letter-spacing: 0.15em;
 }
 .ring-title p { margin: 4px 0 0; color: var(--ink-3); font-size: 14px; }
+.insights { grid-area: stats; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
 .stats-grid {
-  grid-area: stats;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 12px;
@@ -103,7 +116,24 @@ body {
 }
 .stats-grid .card { padding: 14px 16px; }
 .stats-grid .stat-value { font-size: clamp(22px, 2vw, 28px); }
-.map-wrap { grid-area: map; display: flex; align-items: center; justify-content: center; min-height: 0; }
+.map-wrap { grid-area: map; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 0; }
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 14px;
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--ink-2);
+}
+.map-legend-title { font-weight: 700; }
+.map-legend ol { display: flex; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.map-legend li { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 11px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.map-legend li i { width: 38px; height: 10px; border-radius: 2px; }
+.map-legend li:first-child i { border-radius: 4px 2px 2px 4px; }
+.map-legend li:last-child i { border-radius: 2px 4px 4px 2px; }
+.map-legend-note { color: var(--ink-3); }
 .age { grid-area: age; }
 
 .link {
@@ -173,7 +203,12 @@ body {
   outline: none;
   transition: fill 0.2s;
 }
-@media (hover: hover) { .village:hover { fill: var(--land-hover); } }
+@media (hover: hover) { .village:hover { filter: brightness(0.94); } }
+.village.step-0, .map-legend .step-0 { fill: var(--step-0); background: var(--step-0); }
+.village.step-1, .map-legend .step-1 { fill: var(--step-1); background: var(--step-1); }
+.village.step-2, .map-legend .step-2 { fill: var(--step-2); background: var(--step-2); }
+.village.step-3, .map-legend .step-3 { fill: var(--step-3); background: var(--step-3); }
+.village.step-4, .map-legend .step-4 { fill: var(--step-4); background: var(--step-4); }
 .village.is-socket { fill: var(--socket); }
 .village:focus-visible { stroke: var(--accent); stroke-width: 2.5; }
 
@@ -188,18 +223,20 @@ body {
   stroke: rgba(251, 248, 241, 0.8);
   stroke-width: 3px;
 }
-.village-label.is-lifted { font-size: 13px; font-weight: 700; fill: #fff; stroke: rgba(40, 60, 20, 0.45); }
+.village-label.on-dark { fill: #fff; stroke: rgba(40, 60, 20, 0.35); }
+.village-label.is-lifted { font-size: 13px; font-weight: 700; fill: #fff; stroke: rgba(90, 30, 15, 0.45); }
+.village-issue { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; }
 
 .lift-shadow { fill: #3d3418; pointer-events: none; }
-.lift-side { fill: var(--lift-side); stroke: var(--lift-side); stroke-width: 0.6; pointer-events: none; }
+.lift-side { fill: #7a321e; stroke: #7a321e; stroke-width: 0.6; pointer-events: none; }
 .lift-top {
-  fill: var(--lift-top);
+  fill: #c97a5c;
   stroke: #f4f9ec;
   stroke-width: 1.6;
   stroke-linejoin: round;
   cursor: pointer;
 }
-.is-active .lift-top { fill: var(--lift-top-active); }
+.is-active .lift-top { fill: var(--accent); }
 
 /* ---------- 年齡結構 ---------- */
 .age-row { display: grid; grid-template-columns: 72px 1fr; align-items: center; gap: 12px; margin: 6px 0; }
@@ -508,10 +545,10 @@ tbody tr.is-selected th button { color: var(--lift-side); font-weight: 700; }
 }
 .mood svg { width: 26px; height: 26px; fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; }
 .mood svg circle { fill: var(--ink); stroke: none; }
-.mood-angry { background: #e5533d; }
-.mood-worried { background: #f0a04b; }
-.mood-neutral { background: #b9b4aa; }
-.mood-happy { background: #8cc56a; }
+.mood-angry { background: var(--mood-angry); }
+.mood-worried { background: var(--mood-worried); }
+.mood-neutral { background: var(--mood-neutral); }
+.mood-happy { background: var(--mood-happy); }
 
 .board-empty { padding: 32px 8px; text-align: center; color: var(--ink-3); font-size: 14px; }
 
@@ -538,3 +575,47 @@ tbody tr.is-selected th button { color: var(--lift-side); font-weight: 700; }
   .board-list { height: 520px; }
   .note, .note.is-right { margin-left: 0; margin-right: 12px; }
 }
+
+/* ---------- 建言統計 ---------- */
+.stat-text { font-size: clamp(24px, 2.2vw, 30px); letter-spacing: 0.08em; }
+.top-issues ol { margin: 4px 0 0; padding: 0; list-style: none; }
+.top-issues li { padding: 8px 0; border-top: 1px dashed var(--rule); }
+.top-issues li:first-child { border-top: 0; padding-top: 2px; }
+.ti-row { display: grid; grid-template-columns: 20px 40px 1fr auto; align-items: center; gap: 8px; }
+.ti-rank {
+  display: grid; place-items: center;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--ink); color: #fff; font-size: 11px; font-weight: 700;
+}
+.ti-name { font-family: var(--serif); font-weight: 700; font-size: 16px; }
+.ti-bar { height: 12px; background: rgba(42, 39, 33, 0.06); border-radius: 0 4px 4px 0; overflow: hidden; }
+.ti-bar i { display: block; height: 100%; background: var(--accent); border-radius: 0 4px 4px 0; transition: width 0.45s ease; }
+.ti-value { font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ti-value em { font-style: normal; color: var(--ink-3); margin-left: 4px; }
+.ti-policy {
+  display: inline-block;
+  margin: 6px 0 0 28px;
+  font-size: 12.5px;
+  color: var(--accent);
+  text-decoration: none;
+}
+.ti-policy:hover { text-decoration: underline; }
+
+.issue-chip {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.mini-moods { display: flex; gap: 1px; width: 120px; height: 10px; border-radius: 3px; overflow: hidden; }
+.mini-moods i { display: block; min-width: 2px; }
+
+/* 從三大議題跳到政見時，短暫標示 */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+.policy { scroll-margin-top: 24px; }
+.policy:target { animation: policy-flash 1.6s ease; }
+@keyframes policy-flash { 0%, 40% { box-shadow: 0 0 0 4px var(--tone), 0 14px 30px -18px rgba(80, 60, 20, 0.45); } }

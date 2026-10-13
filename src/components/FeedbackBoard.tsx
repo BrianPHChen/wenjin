@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { CATEGORIES, feedback, FEEDBACK_FORM_URL, FEEDBACK_PLACEHOLDER, type Category, type Mood } from '../data/feedback'
+import { CATEGORIES, feedback, FEEDBACK_FORM_URL, FEEDBACK_PLACEHOLDER, MOOD_LABEL, type Category, type Mood } from '../data/feedback'
 import { villages } from '../geo'
 
 const villageName = Object.fromEntries(villages.map((v) => [v.code, v.name.replace('村', '')]))
@@ -11,7 +11,7 @@ function MoodFace({ mood }: { mood: Mood }) {
     neutral: 'M8.5 15.5 H15.5',
     happy: 'M8 14 Q12 18 16 14',
   }[mood]
-  const label = { angry: '生氣', worried: '擔心', neutral: '普通', happy: '開心' }[mood]
+  const label = MOOD_LABEL[mood]
   return (
     <span className={`mood mood-${mood}`} role="img" aria-label={label}>
       <svg viewBox="0 0 24 24" aria-hidden="true">

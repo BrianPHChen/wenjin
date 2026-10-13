@@ -31,9 +31,11 @@ const LINES = ['歡迎來到壯圍！', '點地圖上的村看看～', '有空�
 interface Props {
   /** 目前選取的村名，變更時鄉長會指向地圖並說話 */
   villageName: string | null
+  /** 該村最在意的議題，選村時鄉長會一併提到 */
+  topIssue?: string | null
 }
 
-export function Mascot({ villageName }: Props) {
+export function Mascot({ villageName, topIssue }: Props) {
   const [action, setAction] = useState<Action>('idle')
   const [dragged, setDragged] = useState(false)
   const [bubble, setBubble] = useState<string | null>(null)
@@ -135,7 +137,8 @@ export function Mascot({ villageName }: Props) {
     }
     if (!villageName || minimized) return
     play('point')
-    say(`這裡是${villageName}！`)
+    say(topIssue ? `${villageName}最在意${topIssue}！` : `這裡是${villageName}！`)
+    // 只在換村時說話，topIssue 跟著村變
   }, [villageName, minimized, play, say])
 
   useEffect(() => () => {

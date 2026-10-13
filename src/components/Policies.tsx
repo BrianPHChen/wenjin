@@ -49,7 +49,7 @@ export function Policies() {
         </figure>
 
         {policies.map((p, i) => (
-          <article key={p.title} className={`policy policy-${i + 1} tone-${p.tone}`}>
+          <article key={p.title} id={`policy-${i + 1}`} className={`policy policy-${i + 1} tone-${p.tone}`}>
             <div className="policy-top">
               <span className="policy-icon">
                 <Icon name={p.icon} />
