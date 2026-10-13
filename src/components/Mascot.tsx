@@ -29,9 +29,9 @@ const DRAG_SPEED = 520 // 速度超過就換成「被甩動」姿勢
 const LINES = ['歡迎來到壯圍！', '點地圖上的村看看～', '有空來壯圍走走！', '大家一起加油！']
 
 interface Props {
-  /** 目前選取的村名，變更時鄉長會指向地圖並說話 */
+  /** 目前選取的村名，變更時文進會指向地圖並說話 */
   villageName: string | null
-  /** 該村最在意的議題，選村時鄉長會一併提到 */
+  /** 該村最在意的議題，選村時文進會一併提到 */
   topIssue?: string | null
 }
 
@@ -165,21 +165,21 @@ export function Mascot({ villageName, topIssue }: Props) {
   ].join(' ')
 
   return (
-    <aside className={classes} aria-label="鄉長小幫手">
+    <aside className={classes} aria-label="文進小幫手">
       <div className="mascot-floater" ref={floater}>
         {bubble && !minimized && (
           <p className="mascot-bubble" role="status">
             {bubble}
           </p>
         )}
-        <button type="button" className="mascot-hit" onClick={onClick} aria-label={minimized ? '叫鄉長回來' : '跟鄉長打招呼'}>
+        <button type="button" className="mascot-hit" onClick={onClick} aria-label={minimized ? '叫文進回來' : '跟文進打招呼'}>
           <MayorFigure />
         </button>
         {!minimized && (
           <button
             type="button"
             className="mascot-close"
-            aria-label="收起鄉長"
+            aria-label="收起文進"
             onClick={() => {
               setBubble(null)
               setMinimized(true)

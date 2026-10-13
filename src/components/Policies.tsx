@@ -45,7 +45,7 @@ export function Policies() {
       <div className="policies-ring">
         <figure className="portrait">
           <div className="portrait-disc" aria-hidden="true" />
-          <img src={candidate} alt="吳XX 插畫像" width={880} height={880} loading="lazy" decoding="async" />
+          <img src={candidate} alt="吳文進 插畫像" width={880} height={880} loading="lazy" decoding="async" />
         </figure>
 
         {policies.map((p, i) => (

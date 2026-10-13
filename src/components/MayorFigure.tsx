@@ -1,4 +1,4 @@
-// 暫代用的 Q 版鄉長 SVG。各部件分組，動作由 mascot.css 的 class 驅動：
+// 暫代用的 Q 版文進 SVG。各部件分組，動作由 mascot.css 的 class 驅動：
 //   .m-body（身體，呼吸） .m-head（頭） .m-eyes（眨眼） .m-arm-l / .m-arm-r（肩膀為軸旋轉）
 // 之後換成正式美術時，只要保持這些 class 與肩膀/脖子軸心位置即可沿用動作。
 

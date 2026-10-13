@@ -2,7 +2,7 @@
 export const PRIVACY_PLACEHOLDER = true
 
 export const privacy = {
-  collector: '吳XX 競選辦公室',
+  collector: '吳文進 競選辦公室',
   contact: '（聯絡方式待補）',
   retention: '選舉結束後 6 個月內刪除',
 }
