@@ -18,7 +18,7 @@ export function VideoSection() {
   const shown = videos?.slice(0, VIDEO_LIMIT) ?? []
 
   return (
-    <section className="videos" aria-labelledby="videos-title">
+    <section className="videos" id="videos" aria-labelledby="videos-title">
       <header className="videos-head">
         <p className="eyebrow">影音</p>
         <h2 id="videos-title">文進走透透</h2>

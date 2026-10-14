@@ -101,8 +101,52 @@ html { scroll-padding-top: 56px; }
 }
 .slogan-social:hover { background: #ece4d2; color: var(--ink); }
 .slogan-social svg { width: 20px; height: 20px; }
-@media (max-width: 600px) {
+
+.section-nav { display: flex; align-items: center; gap: 2px; margin-left: auto; }
+.section-nav a {
+  position: relative;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: var(--ink-2);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.section-nav a:hover { color: var(--ink); background: #ece4d2; }
+.section-nav a[aria-current]::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 1px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--lift-side);
+}
+.section-nav a.is-cta { margin: 0 4px; padding: 5px 12px; border: 1px solid var(--accent); color: var(--accent); font-weight: 600; }
+.section-nav a.is-cta:hover { background: var(--accent); color: #fff; }
+.section-nav a.is-cta[aria-current] { background: var(--accent); color: #fff; }
+.section-nav a.is-cta[aria-current]::after { display: none; }
+
+@media (max-width: 1080px) {
   .slogan-who { display: none; }
+}
+/* 窄螢幕：捷徑換到口號下面一行 */
+@media (max-width: 760px) {
+  html { scroll-padding-top: 92px; }
+  .policy { scroll-margin-top: 104px; }
+  .slogan-bar { flex-wrap: wrap; height: auto; row-gap: 0; padding-top: 8px; padding-bottom: 0; }
+  .section-nav {
+    order: 3;
+    flex: 1 0 100%;
+    justify-content: space-between;
+    margin: 4px 0 0;
+    height: 36px;
+    border-top: 1px solid var(--rule);
+  }
+  .section-nav a { padding: 5px 8px; font-size: 14px; letter-spacing: 0.02em; }
+  .section-nav a.is-cta { padding: 3px 12px; }
 }
 
 /* ---------- 標頭 ---------- */

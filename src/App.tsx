@@ -48,7 +48,7 @@ export default function App() {
           <p className="lede">點選地圖上的村，左邊建言統計與右邊鄉親留言會切換成該村；再點一次或按 Esc 回到全鄉。</p>
         </header>
 
-        <main className="ring">
+        <main className="ring" id="overview">
           <div className="ring-title">
             <h2>{name}</h2>
             <p>

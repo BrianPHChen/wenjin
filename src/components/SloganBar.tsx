@@ -2,6 +2,7 @@ import type { MouseEvent } from 'react'
 import { slogan } from '../data/policies'
 import { SOCIAL } from '../data/social'
 import { MAP_HEIGHT, MAP_WIDTH, townshipD } from '../geo'
+import { SectionNav } from './SectionNav'
 import { FacebookIcon, InstagramIcon } from './SocialIcons'
 
 // 不改網址的 hash（hash 用來記錄選取的村）
@@ -10,7 +11,7 @@ const toTop = (e: MouseEvent) => {
   window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
 }
 
-/** 置頂口號列：壯圍鄉剪影＋口號，捲動時一直看得到 */
+/** 置頂口號列：壯圍鄉剪影＋口號＋區塊捷徑，捲動時一直看得到 */
 export function SloganBar() {
   return (
     <div className="slogan-bar">
@@ -20,6 +21,7 @@ export function SloganBar() {
         </svg>
         {slogan.map((s) => <span key={s}>{s}</span>)}
       </a>
+      <SectionNav />
       <span className="slogan-side">
         <span className="slogan-who">吳文進｜壯圍鄉長候選人</span>
         <a className="slogan-social" href={SOCIAL.instagram} target="_blank" rel="noreferrer" aria-label="吳文進 Instagram">

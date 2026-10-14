@@ -61,7 +61,7 @@ function Icon({ name }: { name: Policy['icon'] }) {
 
 export function Policies() {
   return (
-    <section className="policies" aria-labelledby="policies-title">
+    <section className="policies" id="policies" aria-labelledby="policies-title">
       <header className="policies-head">
         <p className="eyebrow">政見</p>
         <h2 id="policies-title">六大政見</h2>

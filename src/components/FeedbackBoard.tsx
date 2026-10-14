@@ -39,7 +39,7 @@ export function FeedbackBoard({ selected, onSelect }: Props) {
   const where = selected ? `${villageName[selected]}村` : '壯圍'
 
   return (
-    <section className="board" aria-labelledby="board-title">
+    <section className="board" id="board" aria-labelledby="board-title">
       <header className="board-head">
         <h3 id="board-title">
           「{where}」的鄉親聲音
