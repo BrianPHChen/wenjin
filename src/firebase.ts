@@ -16,7 +16,7 @@ export const db = getFirestore(app)
 export const REGION = 'asia-east1'
 
 /** LINE Developers → LINE Login channel → LIFF 的 LIFF ID；留空則不顯示 LINE 登入 */
-export const LIFF_ID = ''
+export const LIFF_ID = '2012009375-64O4jGk9'
 
 /** 個資告知版本；改了告知內容就要改這裡和 functions/src/index.ts 的 CONSENT_VERSION */
 export const CONSENT_VERSION = '2026-10-13'

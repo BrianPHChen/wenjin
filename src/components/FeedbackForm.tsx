@@ -152,8 +152,8 @@ function Compose({ name, defaultVillage, busy, onLogout, onSubmit }: ComposeProp
   const [category, setCategory] = useState<Category | ''>('')
   const [mood, setMood] = useState<Mood | ''>('')
   const [text, setText] = useState('')
-  // 預設匿名，要具名請自己選
-  const [anonymous, setAnonymous] = useState(true)
+  // 預設顯示帳號名稱，匿名是選項；帳號沒有名稱時只能匿名
+  const [anonymous, setAnonymous] = useState(!name)
   const n = chars(text)
   const ready = village && category && mood && n >= TEXT_MIN && n <= TEXT_MAX
 
@@ -212,13 +212,13 @@ function Compose({ name, defaultVillage, busy, onLogout, onSubmit }: ComposeProp
       <fieldset className="field">
         <legend className="field-label">留言板上顯示</legend>
         <div className="pick-row">
+          <label className={`pick${!anonymous ? ' is-on' : ''}`}>
+            <input type="radio" name="anon" checked={!anonymous} onChange={() => setAnonymous(false)} disabled={!name} />
+            {name ?? '帳號名稱'}
+          </label>
           <label className={`pick${anonymous ? ' is-on' : ''}`}>
             <input type="radio" name="anon" checked={anonymous} onChange={() => setAnonymous(true)} />
             匿名村民
-          </label>
-          <label className={`pick${!anonymous ? ' is-on' : ''}`} >
-            <input type="radio" name="anon" checked={!anonymous} onChange={() => setAnonymous(false)} disabled={!name} />
-            {name ?? '帳號名稱'}
           </label>
         </div>
       </fieldset>
