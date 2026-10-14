@@ -43,7 +43,9 @@ export default function App() {
         <header className="masthead">
           <p className="eyebrow">宜蘭縣 · 壯圍鄉</p>
           <h1>
-            吳文進｜壯圍鄉長候選人
+            <span className="mh-name">吳文進</span>
+            <span className="mh-sep" aria-hidden="true">｜</span>
+            <span className="mh-role">壯圍鄉長候選人</span>
           </h1>
           <p className="lede">點選地圖上的村，左邊建言統計與右邊鄉親留言會切換成該村；再點一次或按 Esc 回到全鄉。</p>
         </header>

@@ -165,7 +165,7 @@ html { scroll-padding-top: 56px; }
   letter-spacing: 0.12em;
   display: inline-flex;
   align-items: center;
-  gap: 14px;
+  gap: 0;
 }
 .badge {
   font-family: var(--sans);
@@ -176,6 +176,14 @@ html { scroll-padding-top: 56px; }
   border: 1px solid currentColor;
   border-radius: 999px;
   padding: 3px 10px;
+}
+.masthead h1 > span { white-space: nowrap; }
+/* 手機：名字一行、職稱一行，不讓「人」單獨掉到下一行 */
+@media (max-width: 600px) {
+  .masthead h1 { flex-direction: column; gap: 6px; }
+  .mh-sep { display: none; }
+  .mh-name { font-size: 44px; letter-spacing: 0.2em; margin-right: -0.2em; }
+  .mh-role { font-size: 24px; letter-spacing: 0.16em; margin-right: -0.16em; color: var(--ink-2); }
 }
 .lede { margin: 10px 0 0; color: var(--ink-2); font-size: 15px; }
 
