@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { call, errorMessage, isInAppBrowser, lineEnabled, loginWithGoogle, loginWithLine, logout, resumeLineLogin, useUser } from '../auth'
-import { CATEGORIES, MOOD_LABEL, MOODS, TEXT_MAX, TEXT_MIN, type Category, type Mood } from '../data/feedback'
+import { CATEGORIES, MOOD_LABEL, MOODS, OTHER_VILLAGE, OTHER_VILLAGE_LABEL, TEXT_MAX, TEXT_MIN, type Category, type Mood } from '../data/feedback'
 import { privacy } from '../data/privacy'
 import { CONSENT_VERSION } from '../firebase'
 import { villages } from '../geo'
@@ -174,6 +174,7 @@ function Compose({ name, defaultVillage, busy, onLogout, onSubmit }: ComposeProp
         <select value={village} onChange={(e) => setVillage(e.target.value)} required>
           <option value="" disabled>請選擇</option>
           {villages.map((v) => <option key={v.code} value={v.code}>{v.name}</option>)}
+          <option value={OTHER_VILLAGE}>{OTHER_VILLAGE_LABEL}</option>
         </select>
       </label>
 

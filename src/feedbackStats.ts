@@ -1,4 +1,4 @@
-import { ISSUES, MOODS, type Feedback, type Issue, type Mood } from './data/feedback'
+import { ISSUES, MOODS, OTHER_VILLAGE, type Feedback, type Issue, type Mood } from './data/feedback'
 import { villages } from './geo'
 import { makeScale, type CountScale } from './mapScale'
 
@@ -46,7 +46,7 @@ function summarize(list: Feedback[]): FeedbackStats {
   return {
     total: list.length,
     support,
-    villageCount: new Set(list.map((f) => f.village)).size,
+    villageCount: new Set(list.map((f) => f.village).filter((v) => v !== OTHER_VILLAGE)).size,
     issues,
     topIssue: issues[0]?.count ? issues[0].issue : null,
     topConcern: concernCount[concern] ? concern : null,

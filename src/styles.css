@@ -594,6 +594,7 @@ tbody tr.is-selected th button { color: var(--lift-side); font-weight: 700; }
 .tag-no { background: #e9a23b; color: #2a2721; font-variant-numeric: tabular-nums; }
 .tag-village { background: var(--ink); color: #fff; cursor: pointer; }
 .tag-village:hover { background: var(--lift-side); }
+.tag-village.is-other { background: var(--ink-3); cursor: default; }
 .tag-cat { background: var(--age-work); color: #fff; }
 
 .mood {

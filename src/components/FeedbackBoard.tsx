@@ -1,5 +1,5 @@
 import { lazy, Suspense, useMemo, useState } from 'react'
-import { CATEGORIES, type Category } from '../data/feedback'
+import { CATEGORIES, OTHER_VILLAGE, OTHER_VILLAGE_LABEL, type Category } from '../data/feedback'
 import { useFeedback } from '../feedbackStore'
 import { LINE_PENDING_KEY } from '../firebase'
 import { villages } from '../geo'
@@ -69,9 +69,13 @@ export function FeedbackBoard({ selected, onSelect }: Props) {
             <MoodFace mood={f.mood} />
             <div className="note-tags">
               <span className="tag tag-no">No.{f.no.toLocaleString()}</span>
-              <button type="button" className="tag tag-village" onClick={() => onSelect(f.village)} title="在地圖上查看">
-                {villageName[f.village]}
-              </button>
+              {f.village === OTHER_VILLAGE ? (
+                <span className="tag tag-village is-other">{OTHER_VILLAGE_LABEL}</span>
+              ) : (
+                <button type="button" className="tag tag-village" onClick={() => onSelect(f.village)} title="在地圖上查看">
+                  {villageName[f.village]}
+                </button>
+              )}
               <span className="tag tag-cat">{f.category}</span>
             </div>
             <p>{f.text}</p>

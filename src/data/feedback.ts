@@ -29,5 +29,9 @@ export interface Feedback {
 /** 改名過的舊類別，讀到舊資料時換成新名稱 */
 export const LEGACY_CATEGORY: Record<string, Category> = { 文化: '文教' }
 
+/** 村別選「其他」（不屬於壯圍鄉 16 村）時存的值；計入全鄉統計，但不屬於任何一村 */
+export const OTHER_VILLAGE = 'other'
+export const OTHER_VILLAGE_LABEL = '其他'
+
 export const TEXT_MIN = 5
 export const TEXT_MAX = 300

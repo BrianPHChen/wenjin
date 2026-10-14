@@ -3,7 +3,7 @@
 import { collection, doc, getDoc, getDocs, limit, orderBy, query, Timestamp, where } from 'firebase/firestore/lite'
 import { useCallback, useEffect, useState } from 'react'
 import { call, errorMessage, isInAppBrowser, lineEnabled, loginWithGoogle, loginWithLine, logout, resumeLineLogin, useUser } from '../auth'
-import { MOOD_LABEL, type Category, type Mood } from '../data/feedback'
+import { MOOD_LABEL, OTHER_VILLAGE, OTHER_VILLAGE_LABEL, type Category, type Mood } from '../data/feedback'
 import { db } from '../firebase'
 import { villages } from '../geo'
 import { MoodFace } from '../components/MoodFace'
@@ -33,7 +33,7 @@ interface Row {
   createdAt: Timestamp
 }
 
-const villageName = Object.fromEntries(villages.map((v) => [v.code, v.name]))
+const villageName: Record<string, string> = { ...Object.fromEntries(villages.map((v) => [v.code, v.name])), [OTHER_VILLAGE]: OTHER_VILLAGE_LABEL }
 const review = call<{ id: string; action: 'approve' | 'reject' | 'pending' }, unknown>('reviewFeedback')
 const seed = call<{ items: unknown[] }, { count: number }>('seedMockFeedback')
 const clearMock = call<void, { removed: number }>('clearMockFeedback')
