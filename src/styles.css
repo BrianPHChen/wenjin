@@ -896,3 +896,9 @@ html { scroll-behavior: smooth; }
   /* 留空間給右下角的文進，頁尾文字才不會被擋住 */
   .site-footer { padding-bottom: 110px; }
 }
+
+/* ---------- 靜態首頁內容（React 載入前、搜尋引擎看到的） ---------- */
+.prerender { max-width: 720px; margin: 0 auto; color: var(--ink-2); }
+.prerender h2 { font-family: var(--serif); text-align: center; letter-spacing: 0.15em; }
+.prerender h3 { margin: 20px 0 4px; font-family: var(--serif); color: var(--ink); }
+.prerender ul { margin: 0; padding-left: 1.3em; line-height: 1.8; }
