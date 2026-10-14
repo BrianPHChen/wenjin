@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { call, errorMessage, isInAppBrowser, lineEnabled, loginWithGoogle, loginWithLine, logout, resumeLineLogin, useUser } from '../auth'
 import { CATEGORIES, MOOD_LABEL, MOODS, TEXT_MAX, TEXT_MIN, type Category, type Mood } from '../data/feedback'
-import { PRIVACY_PLACEHOLDER, privacy } from '../data/privacy'
+import { privacy } from '../data/privacy'
 import { CONSENT_VERSION } from '../firebase'
 import { villages } from '../geo'
 import { MoodFace } from './MoodFace'
@@ -93,7 +93,7 @@ function Notice({ busy, onLogin }: { busy: boolean; onLogin: (fn: () => Promise<
     <div className="form-body">
       <p className="form-lede">為了避免灌水，留言前需要先登入。登入前請先閱讀以下說明：</p>
       <section className="notice" aria-label="個人資料蒐集告知">
-        <h3>個人資料蒐集告知{PRIVACY_PLACEHOLDER && <span className="badge">草稿</span>}</h3>
+        <h3>個人資料蒐集告知</h3>
         <dl>
           <dt>蒐集者</dt>
           <dd>{privacy.collector}</dd>

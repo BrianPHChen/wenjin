@@ -1,5 +1,4 @@
-// ⚠️ 個資告知草稿：蒐集者名稱、聯絡方式、保存期限請由競選團隊確認後替換，並視需要請律師過目。
-export const PRIVACY_PLACEHOLDER = true
+// 留言前的個資告知；內容要與 public/privacy.html 的隱私權政策一致。
 
 export const privacy = {
   collector: '吳文進 競選辦公室',
