@@ -22,6 +22,12 @@ service cloud.firestore {
       allow read: if request.auth != null && request.auth.uid == uid;
     }
 
+    // 網站設定，例如 site/videos（文進走透透影片清單），審核頁直接寫入
+    match /site/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     match /admins/{uid} {
       allow get: if request.auth != null && request.auth.uid == uid;
     }

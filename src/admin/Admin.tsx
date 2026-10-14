@@ -7,6 +7,7 @@ import { MOOD_LABEL, type Category, type Mood } from '../data/feedback'
 import { db } from '../firebase'
 import { villages } from '../geo'
 import { MoodFace } from '../components/MoodFace'
+import { VideoManager } from './VideoManager'
 import '../form.css'
 import './admin.css'
 
@@ -189,6 +190,8 @@ function Review({ onError }: { onError: (msg: string) => void }) {
           </li>
         ))}
       </ol>
+
+      <VideoManager onError={onError} />
 
       <section className="admin-tools card">
         <h2 className="card-label">示意資料與維護</h2>

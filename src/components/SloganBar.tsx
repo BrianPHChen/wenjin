@@ -1,6 +1,8 @@
 import type { MouseEvent } from 'react'
 import { slogan } from '../data/policies'
+import { SOCIAL } from '../data/social'
 import { MAP_HEIGHT, MAP_WIDTH, townshipD } from '../geo'
+import { FacebookIcon, InstagramIcon } from './SocialIcons'
 
 // 不改網址的 hash（hash 用來記錄選取的村）
 const toTop = (e: MouseEvent) => {
@@ -18,7 +20,15 @@ export function SloganBar() {
         </svg>
         {slogan.map((s) => <span key={s}>{s}</span>)}
       </a>
-      <span className="slogan-who">吳文進｜壯圍鄉長候選人</span>
+      <span className="slogan-side">
+        <span className="slogan-who">吳文進｜壯圍鄉長候選人</span>
+        <a className="slogan-social" href={SOCIAL.instagram} target="_blank" rel="noreferrer" aria-label="吳文進 Instagram">
+          <InstagramIcon />
+        </a>
+        <a className="slogan-social" href={SOCIAL.facebook} target="_blank" rel="noreferrer" aria-label="吳文進 Facebook 粉專">
+          <FacebookIcon />
+        </a>
+      </span>
     </div>
   )
 }

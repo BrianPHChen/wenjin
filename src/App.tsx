@@ -8,6 +8,7 @@ import { MoodStructure } from './components/MoodStructure'
 import { Policies } from './components/Policies'
 import { SloganBar } from './components/SloganBar'
 import { VillageIssueTable } from './components/VillageIssueTable'
+import { VideoSection } from './components/VideoSection'
 import { VillageMap } from './components/VillageMap'
 
 export default function App() {
@@ -93,6 +94,8 @@ export default function App() {
       </p>
 
       <Policies />
+
+      <VideoSection />
 
       <Mascot villageName={village?.name ?? null} topIssue={s.topIssue} />
     </div>
