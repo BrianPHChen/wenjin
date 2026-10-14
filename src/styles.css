@@ -650,13 +650,15 @@ tbody tr.is-selected th button { color: var(--lift-side); font-weight: 700; }
 .ti-bar i { display: block; height: 100%; background: var(--accent); border-radius: 0 4px 4px 0; transition: width 0.45s ease; }
 .ti-value { font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .ti-value em { font-style: normal; color: var(--ink-3); margin-left: 4px; }
-.ti-policy {
-  display: inline-block;
+.ti-policies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
   margin: 6px 0 0 28px;
   font-size: 12.5px;
-  color: var(--accent);
-  text-decoration: none;
+  color: var(--ink-3);
 }
+.ti-policy { color: var(--accent); text-decoration: none; }
 .ti-policy:hover { text-decoration: underline; }
 
 .issue-chip {

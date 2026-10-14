@@ -1,6 +1,6 @@
 import { collection, getDocs } from 'firebase/firestore/lite'
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
-import type { Feedback } from './data/feedback'
+import { CATEGORIES, LEGACY_CATEGORY, type Feedback } from './data/feedback'
 import { db } from './firebase'
 import { buildFeedbackData, type FeedbackData, type FeedbackStats } from './feedbackStats'
 
@@ -23,7 +23,10 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     getDocs(collection(db, 'publicFeed'))
       .then((snap) => {
-        const all = snap.docs.flatMap((d) => (d.data().items ?? []) as Feedback[])
+        const all = snap.docs
+          .flatMap((d) => (d.data().items ?? []) as Feedback[])
+          .map((f) => (f.category in LEGACY_CATEGORY ? { ...f, category: LEGACY_CATEGORY[f.category] } : f))
+          .filter((f) => CATEGORIES.includes(f.category))
         setItems(all.sort((a, b) => b.at - a.at))
         setStatus('ready')
       })

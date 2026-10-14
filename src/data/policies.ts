@@ -1,5 +1,6 @@
 // 政見內容依候選人政見小卡（art/S__168730640.jpg）。
-// tone 為卡片色調；issues 對應鄉親建言的議題類別，三大關注議題會連到對應政見
+// tone 為卡片色調；issues 對應鄉親建言的議題類別，三大關注議題會連到對應政見。
+// 一個議題可對應多項政見，依政見順序顯示，所以主要對應的政見要排在前面
 
 import type { Issue } from './feedback'
 
@@ -34,6 +35,7 @@ export const policies: Policy[] = [
     points: ['協助在地創業，扶植青農返鄉', '加速農業轉型發展與升級', '開設在地農特產品市集'],
     tone: 'young',
     icon: 'sprout',
+    issues: ['農業'],
   },
   {
     title: '便捷壯圍、永續城鄉',
@@ -47,12 +49,13 @@ export const policies: Policy[] = [
     points: ['打造五星級鄉立幼兒園', '推動幼兒園雙語教育', '充實圖書館閱讀與數位資源', '推廣藝文教育與傳統在地文化活動'],
     tone: 'old',
     icon: 'book',
-    issues: ['文化'],
+    issues: ['文教', '育兒'],
   },
   {
     title: '高鐵特區、壯圍升級',
     points: ['全力支持高鐵延伸宜蘭，帶動壯圍產業升級', '規劃高鐵產業園區，增進觀光、經濟、交通、農業發展'],
     tone: 'work',
     icon: 'train',
+    issues: ['交通', '農業'],
   },
 ]

@@ -35,7 +35,7 @@ export function InsightPanel({ stats: s, township: T, isVillage }: Props) {
         {top3.length === 0 && <p className="stat-note">尚無議題留言</p>}
         <ol>
           {top3.map((i, rank) => {
-            const policyIndex = policies.findIndex((p) => p.issues?.includes(i.issue))
+            const related = policies.flatMap((p, k) => (p.issues?.includes(i.issue) ? [k] : []))
             return (
               <li key={i.issue}>
                 <div className="ti-row">
@@ -48,10 +48,15 @@ export function InsightPanel({ stats: s, township: T, isVillage }: Props) {
                     {i.count} 則<em>{pct(i.count / issueTotal)}</em>
                   </span>
                 </div>
-                {policyIndex >= 0 && (
-                  <a className="ti-policy" href={`#policy-${policyIndex + 1}`}>
-                    對應政見：{policies[policyIndex].title} →
-                  </a>
+                {related.length > 0 && (
+                  <p className="ti-policies">
+                    對應政見：
+                    {related.map((k) => (
+                      <a key={k} className="ti-policy" href={`#policy-${k + 1}`}>
+                        {policies[k].title} →
+                      </a>
+                    ))}
+                  </p>
                 )}
               </li>
             )

@@ -19,7 +19,9 @@ const VILLAGES = new Set([
   '10002060001', '10002060002', '10002060003', '10002060004', '10002060005', '10002060006', '10002060007', '10002060009',
   '10002060010', '10002060011', '10002060012', '10002060013', '10002060014', '10002060015', '10002060016', '10002060017',
 ])
-const CATEGORIES = new Set(['交通', '環境', '長照', '育兒', '觀光', '文化', '其他'])
+const CATEGORIES = new Set(['交通', '環境', '長照', '育兒', '文教', '觀光', '農業', '其他'])
+/** 改名過的舊類別，重建公開資料時一併改成新名稱 */
+const LEGACY_CATEGORY: Record<string, string> = { 文化: '文教' }
 const MOODS = new Set(['angry', 'worried', 'neutral', 'happy'])
 const CONSENT_VERSION = '2026-10-13'
 const TEXT_MIN = 5
@@ -191,7 +193,19 @@ export const reviewFeedback = onCall(async (req) => {
 })
 
 /** 依 feedback 裡所有已通過的留言重建 publicFeed（匯入／清除示意資料後、或資料不一致時用） */
+async function migrateCategories() {
+  for (const [from, to] of Object.entries(LEGACY_CATEGORY)) {
+    const old = await db.collection('feedback').where('category', '==', from).get()
+    for (let start = 0; start < old.size; start += 400) {
+      const batch = db.batch()
+      old.docs.slice(start, start + 400).forEach((d) => batch.update(d.ref, { category: to }))
+      await batch.commit()
+    }
+  }
+}
+
 async function rebuildFeed() {
+  await migrateCategories()
   const approved = await db.collection('feedback').where('status', '==', 'approved').get()
   const items = approved.docs.map((d) => toItem(d.id, d.data())).sort((a, b) => b.at - a.at)
   const chunks: PublicItem[][] = [[]]
