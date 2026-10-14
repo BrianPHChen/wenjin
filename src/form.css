@@ -52,6 +52,8 @@
 .notice dl { margin: 0; display: grid; grid-template-columns: 5.5em 1fr; gap: 6px 10px; font-size: 13.5px; line-height: 1.6; }
 .notice dt { color: var(--ink-3); }
 .notice dd { margin: 0; color: var(--ink); }
+.notice-more { margin: 10px 0 0; font-size: 13.5px; }
+.notice-more a { color: var(--accent); }
 
 .agree { display: flex; align-items: center; gap: 8px; font-size: 14.5px; cursor: pointer; }
 .agree input { width: 20px; height: 20px; accent-color: var(--accent); }

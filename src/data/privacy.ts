@@ -3,6 +3,6 @@ export const PRIVACY_PLACEHOLDER = true
 
 export const privacy = {
   collector: '吳文進 競選辦公室',
-  contact: '（聯絡方式待補）',
+  contact: 'brian770130@gmail.com',
   retention: '選舉結束後 6 個月內刪除',
 }

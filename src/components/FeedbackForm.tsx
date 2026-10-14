@@ -108,6 +108,9 @@ function Notice({ busy, onLogin }: { busy: boolean; onLogin: (fn: () => Promise<
           <dt>你的權利</dt>
           <dd>可隨時要求查詢、更正或刪除你的資料：{privacy.contact}。不提供資料將無法留言，但不影響瀏覽網站。</dd>
         </dl>
+        <p className="notice-more">
+          <a href="./privacy" target="_blank" rel="noreferrer">閱讀完整隱私權政策 →</a>
+        </p>
       </section>
       <label className="agree">
         <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />

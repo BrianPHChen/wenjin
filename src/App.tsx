@@ -90,7 +90,7 @@ export default function App() {
       <VillageIssueTable selected={selected} hovered={hovered} onSelect={setSelected} onHover={setHovered} />
 
       <p className="colophon">
-        村里界：內政部國土測繪中心 村里界圖（TWD97，114 年版）
+        村里界：內政部國土測繪中心 村里界圖（TWD97，114 年版） · <a href="./privacy">隱私權政策</a>
       </p>
 
       <Policies />

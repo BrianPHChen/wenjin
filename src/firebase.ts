@@ -4,7 +4,8 @@ import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore/lite'
 // Firebase 網頁設定不是密碼，可以公開；權限由 firestore.rules 與 Cloud Functions 控管
 export const app = initializeApp({
   apiKey: 'AIzaSyAKncRjyaLdaAQVmWln71pYlQNrdlBcxTc',
-  authDomain: 'wenjin-c1557.firebaseapp.com',
+  // 用自己的網域，Google 登入畫面才會顯示 wenjin.tw（Firebase Hosting 會自動提供 /__/auth/handler）
+  authDomain: 'wenjin.tw',
   projectId: 'wenjin-c1557',
   storageBucket: 'wenjin-c1557.firebasestorage.app',
   messagingSenderId: '724856301138',

@@ -358,6 +358,7 @@ tbody th button {
 tbody tr.is-selected th button { color: var(--lift-side); font-weight: 700; }
 
 .colophon { margin-top: 28px; text-align: center; font-size: 12px; color: var(--ink-3); }
+.colophon a { color: inherit; }
 
 /* ---------- 響應式 ---------- */
 @media (max-width: 1180px) {
