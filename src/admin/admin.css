@@ -29,7 +29,7 @@
 .admin-tools { margin-top: 32px; display: flex; flex-direction: column; gap: 10px; }
 .admin-tools h2 { margin: 0; }
 
-.video-form { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr) auto auto; align-items: end; gap: 10px; }
+.video-form { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr) auto auto auto; align-items: end; gap: 10px; }
 .video-form input {
   font: inherit;
   font-size: 16px;
@@ -50,3 +50,22 @@
 @media (max-width: 700px) {
   .video-form { grid-template-columns: minmax(0, 1fr); }
 }
+
+.cover-pick {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 78px;
+  overflow: hidden;
+  border: 1px dashed #c9c0ad;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+.cover-pick img { width: 100%; height: 100%; object-fit: cover; }
+.cover-empty { font-size: 20px; color: var(--ink-3); }
+.cover-pick input, .cover-replace input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.cover-replace { position: relative; overflow: hidden; }
+.cover-replace.is-disabled { opacity: 0.5; pointer-events: none; }
+.video-admin-cover { flex: none; width: 27px; height: 48px; border-radius: 4px; object-fit: cover; background: #e9e1cf; }

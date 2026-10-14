@@ -29,10 +29,15 @@ export function VideoSection() {
         <ol className="video-row">
           {shown.map((v, i) => (
             <li key={v.code}>
-              <button type="button" className={`video-card tone-${TONES[i % TONES.length]}`} onClick={() => setPlaying(v)}>
-                <svg className="video-mark" viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`} aria-hidden="true">
-                  <path d={townshipD} />
-                </svg>
+              <button type="button" className={`video-card tone-${TONES[i % TONES.length]}${v.cover ? ' has-cover' : ''}`}
+                onClick={() => setPlaying(v)}>
+                {v.cover ? (
+                  <img className="video-cover" src={v.cover} alt="" loading="lazy" decoding="async" />
+                ) : (
+                  <svg className="video-mark" viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`} aria-hidden="true">
+                    <path d={townshipD} />
+                  </svg>
+                )}
                 <span className="video-top">
                   <InstagramIcon />
                   Reels

@@ -11,6 +11,8 @@ export interface Video {
   title: string
   /** YYYY-MM-DD */
   date: string
+  /** 封面圖網址（Firebase Storage covers/），沒有就顯示彩色卡片 */
+  cover?: string
 }
 
 /** 網站上顯示最新幾支 */
