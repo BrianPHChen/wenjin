@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { MOOD_LABEL, MOODS } from '../data/feedback'
 import { useFeedback } from '../feedbackStore'
 import { villages } from '../geo'
@@ -10,15 +11,42 @@ interface Props {
   onHover: (code: string | null) => void
 }
 
+const NARROW = '(max-width: 760px)'
+function useNarrow() {
+  const [narrow, setNarrow] = useState(() => matchMedia(NARROW).matches)
+  useEffect(() => {
+    const mq = matchMedia(NARROW)
+    const onChange = () => setNarrow(mq.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+  return narrow
+}
+
 export function VillageIssueTable({ selected, hovered, onSelect, onHover }: Props) {
   const { villages: villageFeedback, maxVillageTotal } = useFeedback()
   const rows = villages
     .map((v) => ({ v, s: villageFeedback[v.code] }))
     .sort((a, b) => b.s.total - a.s.total)
+  // 手機版預設收合；寬螢幕一律展開
+  const narrow = useNarrow()
+  const [open, setOpen] = useState(false)
+  const collapsed = narrow && !open
+  const top = rows[0]
   return (
-    <section className="card table-card">
-      <h3 className="card-label">各村最在意的議題</h3>
-      <div className="table-scroll">
+    <section className={`card table-card${collapsed ? ' is-collapsed' : ''}`}>
+      {!narrow ? (
+        <h3 className="card-label">各村最在意的議題</h3>
+      ) : (
+        <h3 className="card-label">
+          <button type="button" className="table-toggle" aria-expanded={open} aria-controls="village-issue-table" onClick={() => setOpen((o) => !o)}>
+            <span>各村最在意的議題</span>
+            {top?.s.total > 0 && <span className="table-toggle-note">建言最多：{top.v.name} {top.s.total} 則</span>}
+            <span className="table-toggle-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+      )}
+      <div className="table-scroll" id="village-issue-table" hidden={collapsed}>
         <table>
           <thead>
             <tr>

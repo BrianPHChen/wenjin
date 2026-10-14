@@ -378,6 +378,25 @@ html { scroll-padding-top: 56px; }
 
 /* ---------- 一覽表 ---------- */
 .table-card { margin-top: 16px; }
+.table-toggle {
+  all: unset;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  width: 100%;
+  cursor: pointer;
+}
+.table-toggle:focus-visible { outline: 2px solid var(--lift-side); outline-offset: 4px; border-radius: 4px; }
+.table-toggle-note { margin-left: auto; font-size: 12.5px; color: var(--ink-3); letter-spacing: 0; }
+.table-toggle-icon { margin-left: auto; color: var(--ink-3); transition: transform 0.2s; }
+.table-toggle-note + .table-toggle-icon { margin-left: 0; }
+.table-toggle[aria-expanded='true'] .table-toggle-icon { transform: rotate(180deg); }
+.table-card.is-collapsed .card-label { margin-bottom: 0; }
+th[scope='row'] button { white-space: nowrap; }
+@media (max-width: 760px) {
+  .table-card th, .table-card td { padding: 7px 6px; }
+  .table-card .mini-moods { width: 56px; }
+}
 .table-scroll { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
 th, td { padding: 7px 10px; border-bottom: 1px solid var(--rule); text-align: left; }
