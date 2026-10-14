@@ -1,41 +1,58 @@
-// ⚠️ 政見細項為示意文字，請以候選人正式政見取代。
-// tone 為卡片色調；issue 對應鄉親建言的議題類別，三大關注議題會連到對應政見
+// 政見內容依候選人政見小卡（art/S__168730640.jpg）。
+// tone 為卡片色調；issues 對應鄉親建言的議題類別，三大關注議題會連到對應政見
 
 import type { Issue } from './feedback'
 
 export interface Policy {
   title: string
-  summary: string
   points: string[]
   tone: 'old' | 'young' | 'work'
-  icon: 'elder' | 'family' | 'finance'
-  issue?: Issue
+  icon: 'care' | 'sunrise' | 'sprout' | 'bus' | 'book' | 'train'
+  issues?: Issue[]
 }
 
-export const POLICIES_PLACEHOLDER = true
+/** 競選口號，顯示在置頂口號列 */
+export const slogan = ['深耕有進', '壯圍勁讚']
 
 export const policies: Policy[] = [
   {
-    title: '銀髮族敬老福利',
-    summary: '讓長輩在熟悉的村裡安心終老。',
-    points: ['65 歲以上長者健保免費', '老人全口假牙補助', '智慧雙保配套'],
+    title: '活力壯圍、全齡照顧',
+    points: ['65歲以上健保免費', '老人全口假牙補助4萬元', '0至2歲每月補助3000元營養金', '減輕家長負擔，增設鄉內托嬰中心'],
     tone: 'old',
-    icon: 'elder',
-    issue: '長照',
+    icon: 'care',
+    issues: ['長照', '育兒'],
   },
   {
-    title: '友善育兒支持',
-    summary: '讓年輕家庭願意留在壯圍、回到壯圍。',
-    points: ['0 至 2 歲幼兒營養金', '增設公共托育名額', '親子共融公園與遊戲場'],
-    tone: 'young',
-    icon: 'family',
-    issue: '育兒',
-  },
-  {
-    title: '穩健財源規劃',
-    summary: '每一分錢都用在刀口上，施政才能長久。',
-    points: ['公共造產盈餘回饋', '預算公開透明', '爭取中央與縣府補助'],
+    title: '魅力壯圍、國際聚焦',
+    points: ['協力推動『國際龜山朝日節』', '串聯濱海、宜蘭河、蘭陽溪綠色低碳旅程'],
     tone: 'work',
-    icon: 'finance',
+    icon: 'sunrise',
+    issues: ['觀光'],
+  },
+  {
+    title: '富饒壯圍、幸福故鄉',
+    points: ['協助在地創業，扶植青農返鄉', '加速農業轉型發展與升級', '開設在地農特產品市集'],
+    tone: 'young',
+    icon: 'sprout',
+  },
+  {
+    title: '便捷壯圍、永續城鄉',
+    points: ['優化壯圍共乘站，提升安全、資訊與舒適度', '增設定點垃圾回收站', '優化壯圍停車友善空間'],
+    tone: 'young',
+    icon: 'bus',
+    issues: ['交通', '環境'],
+  },
+  {
+    title: '智慧壯圍、優質教育',
+    points: ['打造五星級鄉立幼兒園', '推動幼兒園雙語教育', '充實圖書館閱讀與數位資源', '推廣藝文教育與傳統在地文化活動'],
+    tone: 'old',
+    icon: 'book',
+    issues: ['文化'],
+  },
+  {
+    title: '高鐵特區、壯圍升級',
+    points: ['全力支持高鐵延伸宜蘭，帶動壯圍產業升級', '規劃高鐵產業園區，增進觀光、經濟、交通、農業發展'],
+    tone: 'work',
+    icon: 'train',
   },
 ]

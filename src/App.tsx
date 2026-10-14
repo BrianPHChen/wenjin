@@ -6,6 +6,7 @@ import { InsightPanel } from './components/InsightPanel'
 import { Mascot } from './components/Mascot'
 import { MoodStructure } from './components/MoodStructure'
 import { Policies } from './components/Policies'
+import { SloganBar } from './components/SloganBar'
 import { VillageIssueTable } from './components/VillageIssueTable'
 import { VillageMap } from './components/VillageMap'
 
@@ -34,26 +35,28 @@ export default function App() {
   const name = village?.name ?? '壯圍鄉'
 
   return (
-    <div className="page">
-      <header className="masthead">
-        <p className="eyebrow">宜蘭縣 · 壯圍鄉</p>
-        <h1>
-          吳文進｜壯圍鄉長候選人
-          {hasMock && <span className="badge" title="目前建言數據含示意用假資料">示意資料</span>}
-        </h1>
-        <p className="lede">點選地圖上的村，左邊建言統計與右邊鄉親留言會切換成該村；再點一次或按 Esc 回到全鄉。</p>
-      </header>
+    <>
+      <SloganBar />
+      <div className="page" id="top">
+        <header className="masthead">
+          <p className="eyebrow">宜蘭縣 · 壯圍鄉</p>
+          <h1>
+            吳文進｜壯圍鄉長候選人
+            {hasMock && <span className="badge" title="目前建言數據含示意用假資料">示意資料</span>}
+          </h1>
+          <p className="lede">點選地圖上的村，左邊建言統計與右邊鄉親留言會切換成該村；再點一次或按 Esc 回到全鄉。</p>
+        </header>
 
-      <main className="ring">
-        <div className="ring-title">
-          <h2>{name}</h2>
-          <p>
-            {village ? (
-              <>
-                {village.nameEn} · {s.total} 則建言
-                <button type="button" className="link" onClick={() => setSelected(null)}>
-                  ← 回到全鄉
-                </button>
+        <main className="ring">
+          <div className="ring-title">
+            <h2>{name}</h2>
+            <p>
+              {village ? (
+                <>
+                  {village.nameEn} · {s.total} 則建言
+                  <button type="button" className="link" onClick={() => setSelected(null)}>
+                    ← 回到全鄉
+                  </button>
               </>
             ) : (
               <>16 村 · {status === 'loading' ? '載入中…' : `${T.total} 則建言`}</>
@@ -95,5 +98,6 @@ export default function App() {
 
       <Mascot villageName={village?.name ?? null} topIssue={s.topIssue} />
     </div>
+    </>
   )
 }

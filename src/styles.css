@@ -59,6 +59,41 @@ body {
   padding: 40px 24px 56px;
 }
 
+/* ---------- 置頂口號列 ---------- */
+html { scroll-padding-top: 56px; }
+.slogan-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 52px;
+  padding: 0 max(16px, calc((100% - 1352px) / 2));
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+}
+.slogan {
+  display: inline-flex;
+  align-items: center;
+  gap: 0 0.7em;
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(17px, 2.4vw, 21px);
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+}
+.slogan-mark { height: 34px; width: auto; margin-right: 2px; fill: var(--lift-side); }
+.slogan-who { font-size: 13px; letter-spacing: 0.1em; color: var(--ink-2); white-space: nowrap; }
+@media (max-width: 600px) {
+  .slogan-who { display: none; }
+}
+
 /* ---------- 標頭 ---------- */
 .masthead { text-align: center; margin-bottom: 28px; }
 .eyebrow {
@@ -345,25 +380,27 @@ tbody tr.is-selected th button { color: var(--lift-side); font-weight: 700; }
 .policies-head { text-align: center; margin-bottom: 8px; }
 .policies-head h2 {
   margin: 0;
+  flex-wrap: wrap;
+  justify-content: center;
   font-family: var(--serif);
   font-weight: 900;
   font-size: clamp(28px, 4.5vw, 40px);
   letter-spacing: 0.14em;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 0 0.8em;
 }
 
 .policies-ring {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr) minmax(0, 1fr);
   grid-template-areas:
-    'p1 portrait p2'
-    'p1 portrait p2'
-    '.  p3       .';
+    'p1 portrait p4'
+    'p2 portrait p5'
+    'p3 portrait p6';
   align-items: center;
-  column-gap: 8px;
+  gap: 16px 8px;
 }
 
 .portrait { grid-area: portrait; position: relative; margin: 0; }
@@ -391,9 +428,17 @@ tbody tr.is-selected th button { color: var(--lift-side); font-weight: 700; }
 .tone-old { --tone: var(--age-old); }
 .tone-young { --tone: var(--age-young); }
 .tone-work { --tone: var(--age-work); }
-.policy-1 { grid-area: p1; margin-right: -36px; transform: rotate(-1.5deg); }
-.policy-2 { grid-area: p2; margin-left: -36px; transform: rotate(1.5deg); }
-.policy-3 { grid-area: p3; margin-top: -72px; }
+.policy-1 { grid-area: p1; }
+.policy-2 { grid-area: p2; }
+.policy-3 { grid-area: p3; }
+.policy-4 { grid-area: p4; }
+.policy-5 { grid-area: p5; }
+.policy-6 { grid-area: p6; }
+/* 中間那張往人像靠一點，三張排成弧形 */
+.policy-2 { margin-right: -28px; }
+.policy-5 { margin-left: -28px; }
+.policy-1, .policy-6 { transform: rotate(-1deg); }
+.policy-3, .policy-4 { transform: rotate(1deg); }
 
 .policy-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .policy-icon {
@@ -409,16 +454,16 @@ tbody tr.is-selected th button { color: var(--lift-side); font-weight: 700; }
 .policy-num {
   font-family: var(--serif);
   font-weight: 900;
-  font-size: 28px;
-  color: color-mix(in srgb, var(--tone) 35%, transparent);
+  font-size: 30px;
+  line-height: 1;
+  color: color-mix(in srgb, var(--tone) 60%, transparent);
 }
 .policy h3 {
-  margin: 0;
+  margin: 0 0 8px;
   font-family: var(--serif);
-  font-size: 22px;
-  letter-spacing: 0.06em;
+  font-size: 21px;
+  letter-spacing: 0.04em;
 }
-.policy-summary { margin: 6px 0 10px; font-size: 14px; color: var(--ink-2); }
 .policy ul { margin: 0; padding: 0; list-style: none; }
 .policy li {
   position: relative;
@@ -438,15 +483,23 @@ tbody tr.is-selected th button { color: var(--lift-side); font-weight: 700; }
   transform: translateY(-50%);
 }
 
+@media (max-width: 1180px) {
+  .policies-ring {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: 'portrait portrait' 'p1 p2' 'p3 p4' 'p5 p6';
+    align-items: stretch;
+    gap: 14px;
+  }
+  .portrait { width: min(380px, 70%); justify-self: center; margin-bottom: -48px; }
+  .policy { margin: 0 !important; transform: none !important; }
+}
 @media (max-width: 900px) {
   .policies { margin-top: 44px; }
   .policies-ring {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: 'portrait' 'p1' 'p2' 'p3';
-    row-gap: 14px;
+    grid-template-areas: 'portrait' 'p1' 'p2' 'p3' 'p4' 'p5' 'p6';
   }
-  .portrait { width: min(340px, 86%); justify-self: center; margin-bottom: -40px; }
-  .policy-1, .policy-2, .policy-3 { margin: 0; transform: none; }
+  .portrait { width: min(340px, 86%); }
 }
 
 /* ---------- 鄉親留言板 ---------- */
@@ -621,6 +674,6 @@ tbody tr.is-selected th button { color: var(--lift-side); font-weight: 700; }
 /* 從三大議題跳到政見時，短暫標示 */
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-.policy { scroll-margin-top: 24px; }
+.policy { scroll-margin-top: 72px; }
 .policy:target { animation: policy-flash 1.6s ease; }
 @keyframes policy-flash { 0%, 40% { box-shadow: 0 0 0 4px var(--tone), 0 14px 30px -18px rgba(80, 60, 20, 0.45); } }

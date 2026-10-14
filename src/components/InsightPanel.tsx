@@ -35,7 +35,7 @@ export function InsightPanel({ stats: s, township: T, isVillage }: Props) {
         {top3.length === 0 && <p className="stat-note">尚無議題留言</p>}
         <ol>
           {top3.map((i, rank) => {
-            const policyIndex = policies.findIndex((p) => p.issue === i.issue)
+            const policyIndex = policies.findIndex((p) => p.issues?.includes(i.issue))
             return (
               <li key={i.issue}>
                 <div className="ti-row">
