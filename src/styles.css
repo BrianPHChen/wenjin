@@ -357,8 +357,6 @@ tbody th button {
 }
 tbody tr.is-selected th button { color: var(--lift-side); font-weight: 700; }
 
-.colophon { margin-top: 28px; text-align: center; font-size: 12px; color: var(--ink-3); }
-.colophon a { color: inherit; }
 
 /* ---------- 響應式 ---------- */
 @media (max-width: 1180px) {
@@ -816,4 +814,23 @@ html { scroll-behavior: smooth; }
   }
   .video-row::-webkit-scrollbar { display: none; }
   .video-row li { flex: 0 0 58%; scroll-snap-align: start; }
+}
+
+/* ---------- 頁尾 ---------- */
+.site-footer {
+  margin-top: 64px;
+  padding: 24px 0 8px;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  color: var(--ink-3);
+}
+.site-footer-name { margin: 0; font-family: var(--serif); font-weight: 900; font-size: 16px; letter-spacing: 0.12em; color: var(--ink); }
+.site-footer-links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 18px; margin: 10px 0; font-size: 14px; }
+.site-footer-links a { display: inline-flex; align-items: center; min-height: 36px; color: var(--ink-2); text-decoration: none; }
+.site-footer-links a:hover { color: var(--accent); text-decoration: underline; }
+.site-footer-links svg { width: 20px; height: 20px; }
+.site-footer-note { margin: 0; font-size: 12px; }
+@media (max-width: 600px) {
+  /* 留空間給右下角的文進，頁尾文字才不會被擋住 */
+  .site-footer { padding-bottom: 110px; }
 }

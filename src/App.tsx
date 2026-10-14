@@ -6,6 +6,7 @@ import { InsightPanel } from './components/InsightPanel'
 import { Mascot } from './components/Mascot'
 import { MoodStructure } from './components/MoodStructure'
 import { Policies } from './components/Policies'
+import { SiteFooter } from './components/SiteFooter'
 import { SloganBar } from './components/SloganBar'
 import { VillageIssueTable } from './components/VillageIssueTable'
 import { VideoSection } from './components/VideoSection'
@@ -89,13 +90,11 @@ export default function App() {
 
       <VillageIssueTable selected={selected} hovered={hovered} onSelect={setSelected} onHover={setHovered} />
 
-      <p className="colophon">
-        村里界：內政部國土測繪中心 村里界圖（TWD97，114 年版） · <a href="./privacy">隱私權政策</a>
-      </p>
-
       <Policies />
 
       <VideoSection />
+
+      <SiteFooter />
 
       <Mascot villageName={village?.name ?? null} topIssue={s.topIssue} />
     </div>
