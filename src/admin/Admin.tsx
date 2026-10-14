@@ -192,7 +192,7 @@ function Review({ onError }: { onError: (msg: string) => void }) {
 
       <section className="admin-tools card">
         <h2 className="card-label">示意資料與維護</h2>
-        <p className="form-hint">示意資料（215 則，isMock = true）會直接顯示在網站上。正式上線前請清除。</p>
+        <p className="form-hint">示意資料（isMock = true）在網站上看起來和真實留言一樣，不會標示「示意」。正式上線前請清除。</p>
         <div className="admin-actions">
           <button type="button" className="btn btn-google" disabled={!!busy}
             onClick={() => act('seed', async () => {

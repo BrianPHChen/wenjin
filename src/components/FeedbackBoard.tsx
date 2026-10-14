@@ -27,7 +27,7 @@ export function FeedbackBoard({ selected, onSelect }: Props) {
   const [category, setCategory] = useState<Category | null>(null)
   // LINE 登入會整頁跳轉，回來時直接打開表單繼續
   const [formOpen, setFormOpen] = useState(lineLoginPending)
-  const { items: feedback, status, hasMock } = useFeedback()
+  const { items: feedback, status } = useFeedback()
 
   const inVillage = useMemo(() => (selected ? feedback.filter((f) => f.village === selected) : feedback), [feedback, selected])
   const counts = useMemo(() => {
@@ -43,7 +43,6 @@ export function FeedbackBoard({ selected, onSelect }: Props) {
       <header className="board-head">
         <h3 id="board-title">
           「{where}」的鄉親聲音
-          {hasMock && <span className="badge">含示意留言</span>}
         </h3>
         <div className="chips" role="group" aria-label="依類別篩選">
           <button type="button" className={`chip${category === null ? ' is-on' : ''}`} aria-pressed={category === null} onClick={() => setCategory(null)}>
@@ -76,7 +75,7 @@ export function FeedbackBoard({ selected, onSelect }: Props) {
               <span className="tag tag-cat">{f.category}</span>
             </div>
             <p>{f.text}</p>
-            <span className="note-name">— {f.name ?? '匿名村民'}{f.mock && '（示意）'}</span>
+            <span className="note-name">— {f.name ?? '匿名村民'}</span>
           </li>
         ))}
         {status === 'loading' && <li className="board-empty">留言載入中…</li>}

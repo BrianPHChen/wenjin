@@ -8,8 +8,6 @@ interface Store extends FeedbackData {
   status: 'loading' | 'ready' | 'error'
   /** 新到舊 */
   items: Feedback[]
-  /** 有示意資料時顯示「示意」標籤 */
-  hasMock: boolean
   statsFor: (code: string | null) => FeedbackStats
 }
 
@@ -42,7 +40,6 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
       ...data,
       status,
       items,
-      hasMock: items.some((f) => f.mock),
       statsFor: (code) => (code && data.villages[code]) || data.township,
     }
   }, [items, status])

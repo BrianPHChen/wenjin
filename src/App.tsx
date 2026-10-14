@@ -17,7 +17,7 @@ export default function App() {
     return villages.some((v) => v.code === code) ? code : null
   })
   const [hovered, setHovered] = useState<string | null>(null)
-  const { township: T, statsFor, scale, hasMock, status } = useFeedback()
+  const { township: T, statsFor, scale, status } = useFeedback()
 
   useEffect(() => {
     history.replaceState(null, '', selected ? `#${selected}` : location.pathname + location.search)
@@ -42,7 +42,6 @@ export default function App() {
           <p className="eyebrow">宜蘭縣 · 壯圍鄉</p>
           <h1>
             吳文進｜壯圍鄉長候選人
-            {hasMock && <span className="badge" title="目前建言數據含示意用假資料">示意資料</span>}
           </h1>
           <p className="lede">點選地圖上的村，左邊建言統計與右邊鄉親留言會切換成該村；再點一次或按 Esc 回到全鄉。</p>
         </header>
@@ -91,7 +90,6 @@ export default function App() {
 
       <p className="colophon">
         村里界：內政部國土測繪中心 村里界圖（TWD97，114 年版）
-        {hasMock && ' · 建言數據含示意用假資料'}
       </p>
 
       <Policies />
