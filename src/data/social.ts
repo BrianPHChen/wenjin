@@ -3,6 +3,7 @@
 export const SOCIAL = {
   instagram: 'https://www.instagram.com/wu_wen.jin/',
   facebook: 'https://www.facebook.com/share/1Cn2qistYc/',
+  youtube: 'https://www.youtube.com/@%E5%90%B3%E6%96%87%E9%80%B2%E5%AE%98%E6%96%B9%E5%B8%B3%E8%99%9F',
 }
 
 export interface Video {

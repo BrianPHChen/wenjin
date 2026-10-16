@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { SOCIAL, VIDEO_LIMIT, type Video } from '../data/social'
 import { MAP_HEIGHT, MAP_WIDTH, townshipD } from '../geo'
+import { PAUSE_SONG_EVENT } from '../song'
 import { useVideos } from '../useVideos'
 import { FacebookIcon, InstagramIcon } from './SocialIcons'
 
@@ -71,7 +72,10 @@ export function VideoSection() {
 
 function Player({ video, onClose }: { video: Video; onClose: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null)
-  useEffect(() => dialog.current?.showModal(), [])
+  useEffect(() => {
+    window.dispatchEvent(new Event(PAUSE_SONG_EVENT))
+    dialog.current?.showModal()
+  }, [])
   const url = `https://www.instagram.com/reel/${video.code}/`
   return (
     <dialog ref={dialog} className="player" aria-label={video.title} onClose={onClose}

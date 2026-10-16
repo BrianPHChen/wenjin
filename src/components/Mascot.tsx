@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { SOCIAL } from '../data/social'
+import { PAUSE_SONG_EVENT, SONG_URL } from '../song'
 import { MayorFigure } from './MayorFigure'
 import '../mascot.css'
 
@@ -39,7 +41,12 @@ export function Mascot({ villageName, topIssue }: Props) {
   const [action, setAction] = useState<Action>('idle')
   const [dragged, setDragged] = useState(false)
   const [bubble, setBubble] = useState<string | null>(null)
+  const [songDone, setSongDone] = useState(false)
   const [minimized, setMinimized] = useState(false)
+  const [singing, setSinging] = useState(false)
+  const audio = useRef<HTMLAudioElement | null>(null)
+  const singingRef = useRef(false)
+  singingRef.current = singing
   const floater = useRef<HTMLDivElement>(null)
   const actionTimer = useRef<number>(0)
   const bubbleTimer = useRef<number>(0)
@@ -53,10 +60,13 @@ export function Mascot({ villageName, topIssue }: Props) {
     actionTimer.current = window.setTimeout(() => setAction('idle'), DURATION[a])
   }, [])
 
-  const say = useCallback((text: string) => {
+  const say = useCallback((text: string, ms = 3200) => {
     window.clearTimeout(bubbleTimer.current)
     setBubble(text)
-    bubbleTimer.current = window.setTimeout(() => setBubble(null), 3200)
+    bubbleTimer.current = window.setTimeout(() => {
+      setBubble(null)
+      setSongDone(false)
+    }, ms)
   }, [])
 
   // 捲動彈簧
@@ -118,7 +128,7 @@ export function Mascot({ villageName, topIssue }: Props) {
     let t = 0
     const schedule = () => {
       t = window.setTimeout(() => {
-        if (document.visibilityState === 'visible' && !dragged && actionRef.current === 'idle') {
+        if (document.visibilityState === 'visible' && !dragged && !singingRef.current && actionRef.current === 'idle') {
           play(RANDOM_ACTIONS[Math.floor(Math.random() * RANDOM_ACTIONS.length)] as Exclude<Action, 'idle'>)
         }
         schedule()
@@ -146,6 +156,48 @@ export function Mascot({ villageName, topIssue }: Props) {
     window.clearTimeout(bubbleTimer.current)
   }, [])
 
+  // 唱歌：按了才下載；唱完揮手道謝
+  const stopSong = useCallback(() => {
+    audio.current?.pause()
+    setSinging(false)
+  }, [])
+
+  const toggleSong = () => {
+    if (singing) {
+      stopSong()
+      return
+    }
+    if (!audio.current) {
+      const a = new Audio(SONG_URL)
+      a.addEventListener('ended', () => {
+        setSinging(false)
+        setSongDone(true)
+        play('wave')
+        say('謝謝收聽！深耕有進，壯圍勁讚！', 9000)
+      })
+      a.addEventListener('pause', () => setSinging(false))
+      a.addEventListener('playing', () => setSinging(true))
+      audio.current = a
+    }
+    window.clearTimeout(actionTimer.current)
+    setAction('idle')
+    setBubble(null)
+    setSongDone(false)
+    audio.current.currentTime = 0
+    audio.current.play().catch(() => {
+      setSinging(false)
+      say('歌曲載入失敗，等等再試一次')
+    })
+  }
+
+  useEffect(() => {
+    window.addEventListener(PAUSE_SONG_EVENT, stopSong)
+    return () => {
+      window.removeEventListener(PAUSE_SONG_EVENT, stopSong)
+      audio.current?.pause()
+    }
+  }, [stopSong])
+
   const onClick = () => {
     if (minimized) {
       setMinimized(false)
@@ -153,6 +205,7 @@ export function Mascot({ villageName, topIssue }: Props) {
       say('我回來了！')
       return
     }
+    if (singing) return
     play('jump')
     say(LINES[Math.floor(Math.random() * LINES.length)])
   }
@@ -162,6 +215,7 @@ export function Mascot({ villageName, topIssue }: Props) {
     `act-${action}`,
     dragged && action === 'idle' ? 'is-dragged' : '',
     minimized ? 'is-minimized' : '',
+    singing ? 'is-singing' : '',
   ].join(' ')
 
   return (
@@ -170,18 +224,37 @@ export function Mascot({ villageName, topIssue }: Props) {
         {bubble && !minimized && (
           <p className="mascot-bubble" role="status">
             {bubble}
+            {songDone && (
+              <a className="mascot-bubble-link" href={SOCIAL.youtube} target="_blank" rel="noreferrer">
+                到 YouTube 聽完整版 →
+              </a>
+            )}
           </p>
         )}
         <button type="button" className="mascot-hit" onClick={onClick} aria-label={minimized ? '叫文進回來' : '跟文進打招呼'}>
           <MayorFigure />
         </button>
+        {singing && (
+          <span className="mascot-notes" aria-hidden="true">
+            <i>♪</i>
+            <i>♫</i>
+            <i>♪</i>
+          </span>
+        )}
+        {!minimized && (
+          <button type="button" className={`mascot-song${singing ? ' is-on' : ''}`} onClick={toggleSong} aria-pressed={singing}>
+            {singing ? '■ 停止' : '♪ 聽文進唱歌'}
+          </button>
+        )}
         {!minimized && (
           <button
             type="button"
             className="mascot-close"
             aria-label="收起文進"
             onClick={() => {
+              stopSong()
               setBubble(null)
+              setSongDone(false)
               setMinimized(true)
             }}
           >
